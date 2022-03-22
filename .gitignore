@@ -1,0 +1,8 @@
+build/
+build_release/
+.vscode/
+.cache/
+docs/
+
+imgui.ini
+callgrind*

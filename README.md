@@ -13,7 +13,6 @@ Thinking About:
 OpenAL-Soft (maybe even just OpenAL if I feel like learning audio)
 JSON Parser for C++ (maybe nlohmann/json)
 
-
 ## Structure
 
 1. Framework: Consists of graphics, window, input, and audio api.  

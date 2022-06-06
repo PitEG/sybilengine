@@ -13,6 +13,7 @@ set(SBL_ECS_TEST
 
 set(SBL_UTIL_TEST
   engine/util/test_vector2.cpp
+  engine/util/test_vec.cpp
   engine/util/test_circle.cpp
   engine/util/test_bitmask.cpp
   engine/util/test_idmap.cpp

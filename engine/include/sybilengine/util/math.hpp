@@ -1,10 +1,12 @@
 #pragma once 
 
+#include <math.h>
+
 namespace sbl {
   //CONSTANTS
 
   /**
-   * @brief Math library for ease of access and utilization.
+   * @brief Math library for ease of access and utilization. Maybe they should be inlined...
    */
   class Math {
   public:
@@ -46,5 +48,10 @@ namespace sbl {
     static float Sin(const float radians);
 
     static float Cos(const float radians);
+
+    template<class T>
+    static inline T Lerp(const T a, const T b, const T t) {
+      return std::lerp(a,b,t);
+    }
   };
 }

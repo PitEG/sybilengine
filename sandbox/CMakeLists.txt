@@ -4,6 +4,7 @@ project(sybilsandbox)
 add_executable(inputtest inputpolltest.cpp)
 target_link_libraries(inputtest PRIVATE sybilengine)
 
+#[[
 # APPLICATION TESTING
 add_executable(applicationtest applicationtest.cpp)
 target_link_libraries(applicationtest PRIVATE sybilengine)
@@ -21,7 +22,6 @@ target_link_Libraries(phys_stress PRIVATE sybilengine)
 # add_executable(pong pong.cpp)
 # target_link_Libraries(pong PRIVATE sybilengine)
 
-#[[
 # MEMORY TESTING
 add_executable(glfwmemtest glfwmemtest.cpp)
 target_link_libraries(glfwmemtest PRIVATE glad glfw)

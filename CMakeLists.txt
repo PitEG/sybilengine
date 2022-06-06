@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.17)
 option(BUILD_WINDOWS "Build for Windows")
 option(BUILD_LINUX "Build for Windows")
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)

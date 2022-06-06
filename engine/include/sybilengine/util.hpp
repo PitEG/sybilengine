@@ -5,6 +5,7 @@
 #include "sybilengine/util/color.hpp"
 #include "sybilengine/util/stopwatch.hpp"
 #include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 #include "sybilengine/util/rect.hpp"
 #include "sybilengine/util/circle.hpp"
 #include "sybilengine/util/line.hpp"

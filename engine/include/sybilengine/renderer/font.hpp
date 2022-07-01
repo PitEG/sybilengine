@@ -2,7 +2,7 @@
 
 #include "sybilengine/renderer/texture.hpp"
 #include "sybilengine/renderer/sprite.hpp"
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 
 #include <string>
 #include <unordered_set>
@@ -16,8 +16,8 @@ namespace sbl {
      * @brief Character defintion for a font.
      */
     struct Character {
-      Vector2 size;
-      Vector2 bearing;
+      Vec2f size;
+      Vec2f bearing;
       unsigned int advance;
       Sprite sprite;
     };

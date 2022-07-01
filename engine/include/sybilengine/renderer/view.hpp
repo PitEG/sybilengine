@@ -1,7 +1,7 @@
 #pragma once 
 
 #include <glm/glm.hpp>
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 #include "sybilengine/util/rect.hpp"
 
 #include "sybilengine/renderer/opengl/viewport.hpp"
@@ -35,10 +35,10 @@ namespace sbl {
     /**
      * @brief Move the viewport a specified amount of pixels.
      * 
-     * @param displacement A Vector2 to displace the camera by. Note that it Vector2's
+     * @param displacement A Vec2f to displace the camera by. Note that it Vec2f's
      * are comprised of floats and it's possible to have subpixel locations.
      */
-    void Move(const Vector2& displacement);
+    void Move(const Vec2f& displacement);
 
     /**
      * @brief Change the size of the viewport multiplicatively by factor.

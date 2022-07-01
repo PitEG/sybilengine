@@ -1,11 +1,11 @@
 #pragma once 
 
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 
 namespace sbl {
   /**
    * @brief Generic Rectangle class. It is defined by it's bottom 
-   * left point (as a Vector2) and it's size (an absolute Vector2)
+   * left point (as a Vec2f) and it's size (an absolute Vec2f)
    */
   struct Rect {
   public:
@@ -19,8 +19,12 @@ namespace sbl {
      * @param displacement The bottom left corner of the rectangle.
      * @param size The size of rectangle.
      */
-    Rect(Vector2 displacement, Vector2 size)
-    : m_displacement(displacement), m_size(size.Absolute()) {
+    Rect(Vec2f displacement, Vec2f size)
+    : m_displacement(displacement), m_size(size.Abs()) {
+    }
+
+    Rect(const Rect& other)
+    : m_displacement(other.m_displacement), m_size(other.m_size) {
     }
 
     /**
@@ -33,24 +37,24 @@ namespace sbl {
      * @param TRy TR y coordinate
      */
     Rect(const float BRx, const float BRy, const float TRx, const float TRy) 
-    : m_displacement(Vector2(BRx, BRy)), m_size(Vector2(TRx, TRy)) {
+    : m_displacement(Vec2f(BRx, BRy)), m_size(Vec2f(TRx, TRy)) {
     }
 
     /**
      * @brief Construct a default Rect object. Its bottom left corner is
      * (0,0) and it's size is (0,0)
      */
-    Rect() : Rect(Vector2::Zero(), Vector2::Zero()) {
+    Rect() : Rect(Vec2f::Zero(), Vec2f::Zero()) {
     }
 
     /**
      * @brief Move the rectangle a given amount. Essentially moves all the points.
      * 
-     * @param displacement Vector2 displacement.
+     * @param displacement Vec2f displacement.
      */
-    void Move(Vector2 displacement);
+    void Move(Vec2f displacement);
 
-    void SetPosition(const Vector2& position);
+    void SetPosition(const Vec2f& position);
 
     /* 
      * Getters
@@ -59,9 +63,9 @@ namespace sbl {
     /**
      * @brief Returns the height and width of the rect.
      * 
-     * @return Vector2 (x,y) where x is the width and y is the height.
+     * @return Vec2f (x,y) where x is the width and y is the height.
      */
-    Vector2 Size() const;
+    Vec2f Size() const;
 
     /**
      * @brief Area of the rect. Width * Height.
@@ -88,30 +92,30 @@ namespace sbl {
     /**
      * @brief Top Left Corner
      * 
-     * @return Vector2 
+     * @return Vec2f 
      */
-    Vector2 TL() const;
+    Vec2f TL() const;
 
     /**
      * @brief Top Right Corner
      * 
-     * @return Vector2 
+     * @return Vec2f 
      */
-    Vector2 TR() const;
+    Vec2f TR() const;
 
     /**
      * @brief Bottom Left Corner
      * 
-     * @return Vector2 
+     * @return Vec2f 
      */
-    Vector2 BL() const;
+    Vec2f BL() const;
 
     /**
      * @brief Bottom Right Corner
      * 
-     * @return Vector2 
+     * @return Vec2f 
      */
-    Vector2 BR() const;
+    Vec2f BR() const;
 
     /*
      * Setters
@@ -139,14 +143,14 @@ namespace sbl {
      */
     bool IsOverlapping(const Rect& a, const Rect& b) const;
 
-    Vector2 Center() const;
+    Vec2f Center() const;
 
   private:
     /*
      * Displacement is bottom left corner. 
      * Size + Displacmenet is top right corner
      */
-    Vector2 m_displacement;
-    Vector2 m_size;
+    Vec2f m_displacement;
+    Vec2f m_size;
   };
 }

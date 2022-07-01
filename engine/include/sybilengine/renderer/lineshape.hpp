@@ -40,6 +40,6 @@ namespace sbl {
      * @param color Color of the Shape.
      * @param blendmode BlendMode of the Shape.
      */
-    LineShape(const Vector2 a, const Vector2 b, const Color color = Color::White(), const BlendMode blendmode = BlendMode::AlphaBlending());
+    LineShape(const Vec2f a, const Vec2f b, const Color color = Color::White(), const BlendMode blendmode = BlendMode::AlphaBlending());
   };
 }

@@ -2,11 +2,11 @@
 
 namespace sbl {
   Sprite::Sprite(Texture* texture, const Color color)
-  : m_texture(texture), origin(Vector2::Zero()), color(color) {
+  : m_texture(texture), origin(Vec2f::Zero()), color(color) {
     if (texture != nullptr) {
       textureCoords = Rect(
-          Vector2(0, 0),
-          Vector2(texture->Width(),texture->Height()));
+          Vec2f(0, 0),
+          Vec2f(texture->Width(),texture->Height()));
     }
   }
 
@@ -22,7 +22,7 @@ namespace sbl {
     return textureCoords.Size().y;
   }
 
-  Vector2 Sprite::Size() const {
+  Vec2f Sprite::Size() const {
     return textureCoords.Size();
   }
 

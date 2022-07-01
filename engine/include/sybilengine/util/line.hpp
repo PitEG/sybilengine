@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 
 namespace sbl {
   /**
@@ -10,11 +10,11 @@ namespace sbl {
     /**
      * @brief Point a.
      */
-    Vector2 a;
+    Vec2f a;
     /**
      * @brief Point b.
      */
-    Vector2 b;
+    Vec2f b;
 
     /**
      * @brief Construct a new Line object
@@ -22,7 +22,7 @@ namespace sbl {
      * @param a Point a. 
      * @param b Point b.
      */
-    Line(Vector2 a, Vector2 b);
+    Line(Vec2f a, Vec2f b);
     /**
      * @brief Construct a default Line object. Both point a and b are zero vectors.
      */

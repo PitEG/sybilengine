@@ -118,16 +118,16 @@ namespace sbl {
      */
     void Split() {
       if (m_nodes[0] != nullptr) { return; }
-      Vector2 subBounds = m_bounds.Size() / 2;
-      Vector2 boundsCenter = m_bounds.Center();
+      Vec2f subBounds = m_bounds.Size() / 2;
+      Vec2f boundsCenter = m_bounds.Center();
 
       Rect trQuad(boundsCenter, subBounds);
       m_nodes[0] = new Quadtree(m_level+1, m_maxLevel,  m_maxObjects,trQuad);
-      Rect tlQuad(boundsCenter - Vector2(subBounds.x, 0), subBounds);
+      Rect tlQuad(boundsCenter - Vec2f(subBounds.x, 0), subBounds);
       m_nodes[1] = new Quadtree(m_level+1, m_maxLevel,  m_maxObjects,tlQuad);
       Rect blQuad(boundsCenter - subBounds, subBounds);
       m_nodes[2] = new Quadtree(m_level+1, m_maxLevel,  m_maxObjects,blQuad);
-      Rect brQuad(boundsCenter - Vector2(0,subBounds.y), subBounds);
+      Rect brQuad(boundsCenter - Vec2f(0,subBounds.y), subBounds);
       m_nodes[3] = new Quadtree(m_level+1, m_maxLevel,  m_maxObjects,brQuad);
     }
 
@@ -139,8 +139,8 @@ namespace sbl {
      */
     int GetQuad(const Rect& rect) {
       int index = -1;
-      Vector2 boundsCenter = m_bounds.Center();
-      Vector2 subBounds = m_bounds.Size();
+      Vec2f boundsCenter = m_bounds.Center();
+      Vec2f subBounds = m_bounds.Size();
 
       bool topQuads = rect.BL().y > boundsCenter.y; // && rect.TR().y < boundsCenter.y + subBounds.y;
       bool bottomQuads = rect.TR().y < boundsCenter.y; // && rect.BL().y > boundsCenter.y - subBounds.y;

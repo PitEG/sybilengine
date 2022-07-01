@@ -4,6 +4,7 @@
 #include <queue>
 
 namespace sbl {
+  /*
   struct SortAlgorithm {
     bool operator() (const Sprite& a, const Sprite& b) {
       //return a if tallest
@@ -50,4 +51,5 @@ namespace sbl {
 
     return spriteAtlases;
   }
+  */
 }

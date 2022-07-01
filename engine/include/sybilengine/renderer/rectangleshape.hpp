@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sybilengine/util/rect.hpp"
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 #include "sybilengine/util/color.hpp"
 #include "sybilengine/ecs/transform.hpp"
 #include "sybilengine/renderer/blendmode.hpp"
@@ -19,7 +19,7 @@ namespace sbl {
      * @brief The origin of the shape to act as a rotation pivot. Defined in
      * pixels.
      */
-    Vector2   origin = Vector2(-1,-1);
+    Vec2f   origin = Vec2f(-1,-1);
     /**
      * @brief The BlendMode to draw with.
      */
@@ -32,7 +32,7 @@ namespace sbl {
      * @brief The width and height dimensions of the Rectangle.
      * 
      */
-    Vector2 size;
+    Vec2f size;
 
     /**
      * @brief Construct a new Rectangle Shape object with a position and size.
@@ -41,7 +41,7 @@ namespace sbl {
      * @param size The size of the rectangle.
      * @param color The Color of the rectangle.
      */
-    RectangleShape(const Transform& transform, const Vector2& size, const Color& color = Color::White());
+    RectangleShape(const Transform& transform, const Vec2f& size, const Color& color = Color::White());
     /**
      * @brief Construct a new Rectangle Shape object with a Rect and layer.
      * 

@@ -310,7 +310,7 @@ namespace sbl {
     // view.GetViewport().Bind();
 
     int numLines = lines.size();
-    std::vector<float> positions (numLines * 4); // 2 vector2's
+    std::vector<float> positions (numLines * 4); // 2 Vec2f's
     std::vector<float> colors    (numLines * 4); // rgba
 
     for (int i = 0; i < lines.size(); i++) {
@@ -399,11 +399,11 @@ namespace sbl {
     for (int i = 0; i < numRects; i++) {
       RectangleShape& currRect = rects[i];
 
-      const Vector2& position = currRect.GetTransform().position;
+      const Vec2f& position = currRect.GetTransform().position;
       positions[i * 2] = position.x;
       positions[i * 2 + 1] = position.y;
 
-      const Vector2& size = currRect.size;
+      const Vec2f& size = currRect.size;
       sizes[i * 2] = size.x;
       sizes[i * 2 + 1] = size.y;
 
@@ -471,7 +471,7 @@ namespace sbl {
     spriteInstance.shader->SetVec4("color", color.r, color.g, color.b, color.a);
     //tex coord
     const Texture& texture = *sprite.GetTexture();
-    Vector2 tSize = Vector2(texture.Width(), texture.Height());
+    Vec2f tSize = Vec2f(texture.Width(), texture.Height());
     const Rect& spriteTC = sprite.textureCoords;
     spriteInstance.shader->SetVec2("tcDisplacement", (spriteTC.BL().x/tSize.x), (spriteTC.BL().y/tSize.y));
     spriteInstance.shader->SetVec2("tcSize", spriteTC.Size().x/tSize.x, spriteTC.Size().y/tSize.y);

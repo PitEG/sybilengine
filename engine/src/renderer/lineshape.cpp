@@ -5,7 +5,7 @@ namespace sbl {
   : line(line), color(color), blendmode(blendmode) {
   }
 
-  LineShape::LineShape(const Vector2 a, const Vector2 b, const Color color, const BlendMode blendmode) 
+  LineShape::LineShape(const Vec2f a, const Vec2f b, const Color color, const BlendMode blendmode) 
   : color(color), blendmode(blendmode) {
     Line l(a,b);
     this->line = l;

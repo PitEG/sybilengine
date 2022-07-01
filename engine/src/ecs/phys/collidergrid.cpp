@@ -24,13 +24,13 @@ namespace sbl {
   int& leftmost, int& rightmost, int& bottommost, int& topmost) {
 
     const Rect& bounds = grid.Bounds();
-    Vector2 bottomLeft = bounds.BL();
+    Vec2f bottomLeft = bounds.BL();
     float leftBorder = bottomLeft.x;
     float bottomBorder = bottomLeft.y;
 
     Rect cull = collider.GetCull();
-    Vector2 cullBottomLeft = cull.BL();
-    Vector2 cullTopRight = cull.TR();
+    Vec2f cullBottomLeft = cull.BL();
+    Vec2f cullTopRight = cull.TR();
 
     float width = grid.CellWidth();
     float height = grid.CellHeight();

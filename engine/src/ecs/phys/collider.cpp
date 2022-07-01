@@ -22,7 +22,7 @@ namespace sbl {
     space.rect = rect;
   }
 
-  void Collider::SetPosition(const Vector2& pos) {
+  void Collider::SetPosition(const Vec2f& pos) {
     if (m_type == Type::Rectangle) {
       space.rect.SetPosition(pos);
     }
@@ -37,7 +37,7 @@ namespace sbl {
     }
     else if (m_type == Type::Circle) { // Test Later
       float radius = space.circle.radius;
-      Vector2 corner(radius, radius);
+      Vec2f corner(radius, radius);
       Rect cull( space.circle.center - corner, space.circle.center + corner);
       return cull;
     }
@@ -50,9 +50,9 @@ namespace sbl {
     // find the only possible collision point given position of circle and rect
     float xPos = Math::Clamp(circle.center.x, rect.BL().x, rect.BR().x);
     float yPos = Math::Clamp(circle.center.y, rect.BL().y, rect.TR().y);
-    Vector2 posisbleCollisionPoint(xPos, yPos);
+    Vec2f posisbleCollisionPoint(xPos, yPos);
 
-    float distance = Vector2::Distance(posisbleCollisionPoint, circle.center);
+    float distance = Vec2f::Distance(posisbleCollisionPoint, circle.center);
     if (distance <= circle.radius) {
       return true;
     }
@@ -76,10 +76,10 @@ namespace sbl {
     if (a.m_type == Type::Rectangle && b.m_type == Type::Rectangle) {
       const Rect& aRect = a.space.rect;
       const Rect& bRect = b.space.rect;
-      Vector2 aBL = aRect.BL();
-      Vector2 aTR = aRect.TR();
-      Vector2 bBL = bRect.BL();
-      Vector2 bTR = bRect.TR();
+      Vec2f aBL = aRect.BL();
+      Vec2f aTR = aRect.TR();
+      Vec2f bBL = bRect.BL();
+      Vec2f bTR = bRect.TR();
       // bool xCollision = (aRect.BL().x <= bRect.BR().x && aRect.BR().x >= bRect.BL().x);
       bool xCollision = (aBL.x <= bTR.x && aTR.x >= bBL.x);
       if (xCollision == false) { return false; }
@@ -102,7 +102,7 @@ namespace sbl {
       const sbl::Circle& aCircle = a.space.circle;
       const sbl::Circle& bCircle = b.space.circle;
 
-      float distance = sbl::Vector2::Distance(aCircle.center, bCircle.center);
+      float distance = sbl::Vec2f::Distance(aCircle.center, bCircle.center);
       float radiusSum = aCircle.radius + bCircle.radius;
 
       collision = distance <= radiusSum;

@@ -2,7 +2,7 @@
 
 #include <string> // change layer to string instead of an int.
 
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 
 namespace sbl {
   /**
@@ -13,7 +13,7 @@ namespace sbl {
     /**
      * @brief Position in world space.
      */
-    Vector2 position;
+    Vec2f position;
     /**
      * @brief Rotational position (in radians).
      */
@@ -27,7 +27,7 @@ namespace sbl {
      * @brief Construct a default Transform object. Initializes default member variables.
      */
     Transform() 
-      : position(Vector2::Zero()), rotation(0), layer(0) {}
+      : position(Vec2f::Zero()), rotation(0), layer(0) {}
     /**
      * @brief Construct a new Transform object
      * 
@@ -35,7 +35,7 @@ namespace sbl {
      * @param rotation Rotation (in radians).
      * @param layer Layer number.
      */
-    Transform(const Vector2 position, const float rotation, const int layer) 
+    Transform(const Vec2f position, const float rotation, const int layer) 
       : position(position), rotation(rotation), layer(layer) {}
 
     /**
@@ -47,9 +47,9 @@ namespace sbl {
     /**
      * @brief Move the position a certain amount.
      * 
-     * @param displacement The Vector2 to displace by.
+     * @param displacement The Vec2f to displace by.
      */
-    inline void Translate(const Vector2 displacement) { position = position + displacement; }
+    inline void Translate(const Vec2f displacement) { position = position + displacement; }
   private:
   };
 }

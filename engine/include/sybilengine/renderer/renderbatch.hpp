@@ -20,18 +20,18 @@ namespace sbl {
     void Modify(const int id, const Sprite& sprite);
     // get pointers to the data
     bool Get(const int id, 
-      Vector2* origin, Vector2* position, float* rotation, Vector2* size, 
-      Color* color, Vector2* textureDisplacement, Vector2* textureSize);
+      Vec2f* origin, Vec2f* position, float* rotation, Vec2f* size, 
+      Color* color, Vec2f* textureDisplacement, Vec2f* textureSize);
     Sprite& operator[](const int idx);
     const Sprite& operator[](const int idx) const;
 
     // specific modifications
-    void ModifyOrigin(const int id, Vector2 origin);
-    void ModifyPosition(const int id, Vector2 position);
+    void ModifyOrigin(const int id, Vec2f origin);
+    void ModifyPosition(const int id, Vec2f position);
     void ModifyRotation(const int id, float rotation);
-    void ModifyScale(const int id, Vector2 size);
+    void ModifyScale(const int id, Vec2f size);
     void ModifyColor(const int id, Color color);
-    void ModifyTextureCoords(const int id, Vector2 texDisp, Vector2 texSize);
+    void ModifyTextureCoords(const int id, Vec2f texDisp, Vec2f texSize);
     void ModifyTextureCoords(const int id, Rect texCoords);
 
   private:

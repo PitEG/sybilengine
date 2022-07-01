@@ -25,7 +25,7 @@ namespace sbl {
      * And (20,20) means the sprite's center is 20 pixels up and 20 pixels to the right of the
      * middle of the sprite.
      */
-    Vector2   origin;
+    Vec2f   origin;
     
     /**
      * @brief Sprite's color. Depending on the shader program, this will do something different.
@@ -94,9 +94,9 @@ namespace sbl {
      * @brief Get the size the Sprite. Note the the size is a float, meaning that 
      * the sprite * can be of subpixel size and does not represent the pixel size.
      * 
-     * @return Vector2 A Vector (x,y) where x is the width and y is the height.
+     * @return Vec2f A Vector (x,y) where x is the width and y is the height.
      */
-    Vector2 Size() const;
+    Vec2f Size() const;
 
     /*
      * Setters

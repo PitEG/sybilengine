@@ -45,6 +45,7 @@ namespace sbl {
     constexpr Vec2 Normalized() const; // maybe shouldn't be constexpr
     constexpr Vec2 Abs() const;
 
+    static constexpr T Distance(const Vec2<T>& a, const Vec2<T>& b);
     static constexpr T Dot(const Vec2<T>& a, const Vec2<T>& b);
     static constexpr Vec2 Reflect(const Vec2<T>& vector, const Vec2<T>& normal);
     static constexpr T AngleDegree(const Vec2<T>& a, const Vec2<T>& b);
@@ -175,6 +176,14 @@ namespace sbl {
   template<class T>
   constexpr Vec2<T> Vec2<T>::Abs() const {
     return Vec2<T>(Math::Abs(x), Math::Abs(y)); // math abs works only on floats atm
+  }
+
+  template<class T>
+  constexpr T Vec2<T>::Distance(const Vec2<T>& a, const Vec2<T>& b) {
+    const Vec2<T> c = (a - b);
+    const T x = c.x;
+    const T y = c.y;
+    return Math::Abs(static_cast<T>(Math::Sqrt(static_cast<float>(x*x+y*y))));
   }
 
   template<class T>

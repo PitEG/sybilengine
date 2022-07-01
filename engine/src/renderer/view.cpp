@@ -5,7 +5,7 @@
 namespace sbl {
 
   View::View() {
-    m_rect = Rect(Vector2::Zero(), Vector2::Zero());
+    m_rect = Rect(Vec2f::Zero(), Vec2f::Zero());
     m_ortho = glm::mat4(1);
     m_viewport = gl::Viewport();
   }
@@ -17,7 +17,7 @@ namespace sbl {
   /*
    * Methods
    */
-  void View::Move(const Vector2& displacement) {
+  void View::Move(const Vec2f& displacement) {
     m_rect.Move(displacement);
     SetRect(m_rect);
   }
@@ -32,8 +32,8 @@ namespace sbl {
     //set viewport
     m_viewport = gl::Viewport(0, 0, (int)rect.Size().x, (int)rect.Size().y);
     //set projection
-    Vector2 bl = rect.BL();
-    Vector2 tr = rect.TR();
+    Vec2f bl = rect.BL();
+    Vec2f tr = rect.TR();
     m_ortho = glm::ortho(bl.x, tr.x, bl.y, tr.y, -1.0f, 1.0f);
   }
 

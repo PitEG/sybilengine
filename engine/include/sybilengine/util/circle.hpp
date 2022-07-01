@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 
 namespace sbl {
   /**
@@ -12,7 +13,7 @@ namespace sbl {
     /**
      * @brief Radius is defined by the center (and radius)
      */
-    Vector2 center;
+    Vec2f center;
     /**
      * @brief Radius is defined by the radius (and center)
      */
@@ -24,7 +25,9 @@ namespace sbl {
      * @param center center of circle
      * @param radius radius of circle
      */
-    Circle(Vector2 center = Vector2::Zero(), float radius = 1);
+    Circle(Vec2f center = Vec2f::Zero(), float radius = 1);
+
+    Circle(const Circle& other);
 
     /**
      * @brief Get the Area of the circle. pi * radius ^ 2

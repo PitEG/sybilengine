@@ -66,7 +66,7 @@ namespace sbl {
      */
     inline sbl::Circle GetCircle() const { return space.circle; }
 
-    void SetPosition(const Vector2& pos);
+    void SetPosition(const Vec2f& pos);
 
     /**
      * @brief Calculate Collisions with a collision matrix. Checks only if
@@ -91,10 +91,15 @@ namespace sbl {
     static bool CalculateCollisionAlg(const Collider& a, const Collider& b);
 
   private:
-    union Space {
+    struct Space {
       sbl::Rect rect;
       sbl::Circle circle;
-    } space = {Rect()};
+
+      Space() {
+        rect = sbl::Rect(0,0,0,0);
+        circle = sbl::Circle();
+      }
+    } space;
 
     Type m_type;
     unsigned int m_collisionLayer; // should be between [0,BITMASK_MAX) (so probably 0 to 63)

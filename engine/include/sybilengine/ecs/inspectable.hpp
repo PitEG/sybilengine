@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sybilengine/util/vector2.hpp"
+#include "sybilengine/util/vec.hpp"
 
 #include <vector>
 #include <string>
@@ -21,7 +21,7 @@ namespace sbl {
     enum Type {
       Int,
       Float,
-      Vector2
+      Vec2f
     };
     /**
      * @brief Type of Value.
@@ -34,7 +34,7 @@ namespace sbl {
     union {
       int*          pInt;
       float*        pFloat;
-      sbl::Vector2* pVector2;
+      sbl::Vec2f* pVec2f;
     };
   };
 
@@ -73,15 +73,15 @@ namespace sbl {
       list.push_back(p);
     }
     /**
-     * @brief Add a Vector2 property.
+     * @brief Add a Vec2f property.
      * 
      * @param name Name of the property.
-     * @param v The Vector2 pointer.
+     * @param v The Vec2f pointer.
      */
-    void AddVector2(std::string name, Vector2* v) {
+    void AddVec2f(std::string name, Vec2f* v) {
       Property p;
-      p.type = Property::Type::Vector2;
-      p.pVector2 = v;
+      p.type = Property::Type::Vec2f;
+      p.pVec2f = v;
       list.push_back(p);
     }
     //add more pushes here

@@ -91,8 +91,7 @@ namespace sbl {
   }
   int ColliderGrid::Add(const Collider& collider) {
     // create entry
-    Entry entry;
-    entry.collider = collider;
+    Entry entry(collider, 0); // 0 is a placeholder id
     int id = m_entries.Add(entry);
 
     InsertEntry(id, collider);

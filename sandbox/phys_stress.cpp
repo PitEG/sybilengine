@@ -6,7 +6,7 @@
 struct Boxes {
   std::vector<sbl::RectangleShape> rectangles;
   std::vector<sbl::Collider> colliders;
-  std::vector<sbl::Vector2> velocities;
+  std::vector<sbl::Vec2f> velocities;
   std::vector<std::vector<sbl::Collision>> collisions;
   std::vector<int> selected;
   std::vector<int> ids;
@@ -25,7 +25,7 @@ public:
     sbl::Renderer renderer;
     sbl::Texture framebuffer_texture(window.Width(),window.Height());
     sbl::Sprite framebuffer(&framebuffer_texture);
-    sbl::Rect screen_rect(sbl::Vector2::Zero(), sbl::Vector2(window.Width(),window.Height()));
+    sbl::Rect screen_rect(sbl::Vec2f::Zero(), sbl::Vec2f(window.Width(),window.Height()));
     sbl::View view(sbl::Rect(0,0,window.Width(),window.Height()));
     sbl::Random random(1);
 
@@ -40,15 +40,15 @@ public:
     for (int i = 0; i <= grid_width; i++) {
       float x = (float) window.Width() / (float) grid_width * i;
       sbl::LineShape line(
-        sbl::Vector2(x,0),
-        sbl::Vector2(x,window.Height()));
+        sbl::Vec2f(x,0),
+        sbl::Vec2f(x,window.Height()));
       lines.push_back(line);
     }
     for (int i = 0; i <= grid_width; i++) {
       float y = (float) window.Height() / (float) grid_height * i;
       sbl::LineShape line(
-        sbl::Vector2(0,y),
-        sbl::Vector2(window.Width(),y));
+        sbl::Vec2f(0,y),
+        sbl::Vec2f(window.Width(),y));
       lines.push_back(line);
     }
 
@@ -61,8 +61,8 @@ public:
       // shape
       float x = random.RangeFloat(window.Width());
       float y = random.RangeFloat(window.Height());
-      sbl::Transform t(sbl::Vector2(x,y),0,0);
-      sbl::Vector2 size(box_size,box_size);
+      sbl::Transform t(sbl::Vec2f(x,y),0,0);
+      sbl::Vec2f size(box_size,box_size);
       sbl::RectangleShape rectshape(t,size);
       boxes.rectangles.push_back(rectshape);
       
@@ -74,7 +74,7 @@ public:
       float angle = random.RangeFloat(sbl::Math::PI * 2);
       x = sbl::Math::Cos(angle);
       y = sbl::Math::Sin(angle);
-      boxes.velocities.push_back(sbl::Vector2(x,y));
+      boxes.velocities.push_back(sbl::Vec2f(x,y));
 
       // collider grid id
       int id = grid.Add(collider);
@@ -134,23 +134,23 @@ public:
       if (input.GetKey(sbl::KeyCode::Escape)) {
         window.Close();
       }
-      if (input.GetKey(sbl::KeyCode::E)) { view.Move(sbl::Vector2::Up()    * speed); }
-      if (input.GetKey(sbl::KeyCode::D)) { view.Move(sbl::Vector2::Down()  * speed); }
-      if (input.GetKey(sbl::KeyCode::S)) { view.Move(sbl::Vector2::Left()  * speed); }
-      if (input.GetKey(sbl::KeyCode::F)) { view.Move(sbl::Vector2::Right() * speed); }
+      if (input.GetKey(sbl::KeyCode::E)) { view.Move(sbl::Vec2f::Up()    * speed); }
+      if (input.GetKey(sbl::KeyCode::D)) { view.Move(sbl::Vec2f::Down()  * speed); }
+      if (input.GetKey(sbl::KeyCode::S)) { view.Move(sbl::Vec2f::Left()  * speed); }
+      if (input.GetKey(sbl::KeyCode::F)) { view.Move(sbl::Vec2f::Right() * speed); }
 
       //PHYSICS
 
       if (!paused) {
         for (int i = 0; i < boxes.rectangles.size(); i++) {
           sbl::RectangleShape& shape = boxes.rectangles[i];
-          sbl::Vector2& velocity = boxes.velocities[i];
+          sbl::Vec2f& velocity = boxes.velocities[i];
           sbl::Collider& collider = boxes.colliders[i];
           int id = boxes.ids[i];
           shape.GetTransform().Translate(velocity);
 
           // correct if hitting bounds
-          sbl::Vector2 position = shape.GetTransform().position;
+          sbl::Vec2f position = shape.GetTransform().position;
           if (position.x < 0 || position.x > window.Width()) {
             velocity.x = -velocity.x;
           }
@@ -215,11 +215,11 @@ public:
       }
       if (ImGui::CollapsingHeader("Box Info")) {
         for (int i = 0; i < num_boxes; i++) {
-          sbl::Vector2 position = boxes.rectangles[i].GetTransform().position;
+          sbl::Vec2f position = boxes.rectangles[i].GetTransform().position;
           ImGui::Checkbox("select", (bool*)(&boxes.selected[i]));
           ImGui::Text("box #%d: x=%f,y=%f",i,position.x, position.y);
-          sbl::Vector2 size = boxes.colliders[i].GetRect().Size();
-          sbl::Vector2 collider_position = boxes.colliders[i].GetRect().BR() - (sbl::Vector2(1,1) * box_size / 2);
+          sbl::Vec2f size = boxes.colliders[i].GetRect().Size();
+          sbl::Vec2f collider_position = boxes.colliders[i].GetRect().BR() - (sbl::Vec2f(1,1) * box_size / 2);
           ImGui::Text("collider position: x=%f,y=%f",collider_position.x,collider_position.y);
           ImGui::Text("collider size: %fx%f",size.x,size.y);
           ImGui::Text("num collisions: %d",boxes.collisions[i].size());

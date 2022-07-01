@@ -14,10 +14,6 @@ add_executable(opengltest opengltest.cpp)
 target_link_libraries(opengltest PRIVATE sybilengine)
 configure_file(sybil.png sybil.png COPYONLY)
 
-# PHYS STRESS TEST
-add_executable(phys_stress phys_stress.cpp)
-target_link_Libraries(phys_stress PRIVATE sybilengine)
-
 # PONG
 # add_executable(pong pong.cpp)
 # target_link_Libraries(pong PRIVATE sybilengine)
@@ -26,6 +22,10 @@ target_link_Libraries(phys_stress PRIVATE sybilengine)
 add_executable(glfwmemtest glfwmemtest.cpp)
 target_link_libraries(glfwmemtest PRIVATE glad glfw)
 ]]
+
+# PHYS STRESS TEST
+add_executable(phys_stress phys_stress.cpp)
+target_link_Libraries(phys_stress PRIVATE sybilengine)
 
 # IMGUI TEST (DEMO)
 add_executable(imgui_test imguitest.cpp)

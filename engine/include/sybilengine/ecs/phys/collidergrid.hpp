@@ -28,6 +28,14 @@ namespace sbl {
     struct Entry { // actual collider itself
       Collider collider;
       int location;
+
+      Entry(const Collider& collider, const int location) 
+      : collider(collider), location(location) {
+      }
+
+      Entry(const Entry& other) 
+      : collider(other.collider), location(other.location) {
+      }
     };
 
     struct EntryNode { // objects that cells hold that refer to the colliders by id

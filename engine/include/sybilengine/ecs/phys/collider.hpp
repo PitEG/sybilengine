@@ -22,6 +22,8 @@ namespace sbl {
 
     virtual ~Collider();
 
+    Collider(const Collider& other);
+
     Collider(const sbl::Circle circle, const unsigned int layer, const Entity entity = Entity()); 
     Collider(const Rect rect, const unsigned int layer, const Entity entity = Entity());
 
@@ -91,15 +93,10 @@ namespace sbl {
     static bool CalculateCollisionAlg(const Collider& a, const Collider& b);
 
   private:
-    struct Space {
+    union Space {
       sbl::Rect rect;
       sbl::Circle circle;
-
-      Space() {
-        rect = sbl::Rect(0,0,0,0);
-        circle = sbl::Circle();
-      }
-    } space;
+    } space = {Rect(0,0,0,0)};
 
     Type m_type;
     unsigned int m_collisionLayer; // should be between [0,BITMASK_MAX) (so probably 0 to 63)

@@ -10,6 +10,11 @@ namespace sbl {
   Collider::~Collider() {
   }
 
+  Collider::Collider(const Collider& other)
+  : m_type(other.m_type), m_collisionLayer(other.m_collisionLayer) {
+    space = other.space;
+  }
+
   Collider::Collider(const sbl::Circle circle, const unsigned int layer, const Entity entity) {
     m_type = Type::Circle;
     m_collisionLayer = layer;

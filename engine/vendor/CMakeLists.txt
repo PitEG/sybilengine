@@ -15,3 +15,26 @@ find_package(SDL2 REQUIRED)
 message("found SDL2")
 include_directories(${SDL2_INCLUDE_DIRS})
 message("added SDL2")
+
+# IMGUI
+set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui CACHE PATH "imgui dir in engine vendor")
+set(IMGUI_INC ${IMGUI_DIR} ${IMGUI_DIR}/backends CACHE PATH "imgui inc directory")
+
+add_library(imgui SHARED 
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/imgui_demo.cpp) # this last one is optional really. Only need it for the demo
+
+  # opengl3 
+add_library(imgui_opengl3 SHARED ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp)
+target_link_libraries(imgui_opengl3 glad)
+target_include_directories(imgui_opengl3 PUBLIC ${IMGUI_INC})
+target_compile_definitions(imgui_opengl3 PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
+
+  # sdl2 
+add_library(imgui_sdl2 SHARED ${IMGUI_DIR}/backends/imgui_impl_sdl.cpp)
+target_link_libraries(imgui_sdl2 glad SDL2)
+target_include_directories(imgui_sdl2 PUBLIC ${IMGUI_INC})
+target_compile_definitions(imgui_sdl2 PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)

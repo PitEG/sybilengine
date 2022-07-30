@@ -21,10 +21,14 @@ namespace sbl {
     void Close();
     bool IsClosed();
     void SetVsync(int);
+    int GetVsync();
     void SwapBuffers();
+    void Clear(float r = 1, float g = 1, float b = 1, float a = 1);
   private:
     void* m_window;
     void* m_graphicsContext;
     bool m_closed;
+
+    friend class ImGUI;
   };
 }

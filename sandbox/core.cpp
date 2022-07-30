@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-#include <SDL2/SDL.h>
+#include <imgui.h>
+#include <imgui_impl_sdl.h>
+#include <imgui_impl_opengl3.h>
 
 int main() {
   sbl::Engine::Init();
@@ -10,18 +12,35 @@ int main() {
   sbl::Window window = sbl::Window("test");
   window.SetVsync(sbl::Window::VSYNC_ON);
 
+  sbl::ImGUI::CreateContext(window);
+
   unsigned long int f = 0;
   while(!window.IsClosed()) {
     f++;
+
+    window.Clear();
+
+    sbl::ImGUI::ProcessEvents(window);
     sbl::Input input = window.PollInput();
+
     if (input.GetKey(sbl::KeyCode::ESCAPE)) {
       std::cout << "pressed escape" << std::endl;
       window.Close();
     }
     if (input.GetKey(sbl::KeyCode::SPACE)) {
       std::cout << "pressed space" << std::endl;
+      window.Clear(0.9f,0.9f,0.9f,1);
     }
-    std::cout << "frame: " << std::to_string(f) << std::endl;
+
+    sbl::ImGUI::NewFrame();
+    {
+      ImGui::Begin("stuff");
+      ImGui::Text("hi there");
+      ImGui::End();
+    }
+    bool a = true;
+    ImGui::ShowDemoWindow(&a);
+    sbl::ImGUI::Render();
 
     window.SwapBuffers();
   }

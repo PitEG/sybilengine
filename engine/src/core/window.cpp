@@ -1,6 +1,8 @@
 #include "sybilengine/core/window.hpp"
+#include "sybilengine/core/keycode.hpp"
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_video.h>
+#include <glad/glad.h>
 #include <cstring>
 
 namespace sbl {
@@ -8,23 +10,35 @@ namespace sbl {
       const std::string title, 
       const unsigned int width, 
       const unsigned int height) {
-    m_window = (void*)SDL_CreateWindow(
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Always required on Mac
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+    m_window = SDL_CreateWindow(
         title.c_str(), 
         SDL_WINDOWPOS_UNDEFINED, 
         SDL_WINDOWPOS_UNDEFINED, 
         width, 
         height,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
+
     // handle error here 
     if (m_window == NULL) {
     }
 
     // create opengl context
     m_graphicsContext = (void*)SDL_GL_CreateContext((SDL_Window*)m_window);
+    gladLoadGLLoader(SDL_GL_GetProcAddress);
+    SDL_GL_MakeCurrent((SDL_Window*)m_window, (SDL_GLContext*)m_graphicsContext);
   }
 
   Window::~Window() {
     SDL_DestroyWindow((SDL_Window*)m_window);
+    SDL_GL_DeleteContext((SDL_GLContext*)m_graphicsContext);
   }
 
   /**
@@ -48,6 +62,9 @@ namespace sbl {
 
     // if there are any queued events, process them
     while (SDL_PollEvent(&ev) != 0) {
+      // for imgui, this probably isn't necessary
+      // ImGui_ImplSDL2_ProcessEvent(&ev);
+
       // SDL_Log("%d", ev.type);
       if (ev.type == SDL_WINDOWEVENT) {
         switch (ev.window.event) {
@@ -84,12 +101,22 @@ namespace sbl {
     int returnCode = SDL_GL_SetSwapInterval(setting); 
     // if adaptive sync was enabled but the system doesn't support it or something
     // fall back to regular vsync.
-    if (setting == ADAPTIVE_SYNC_ON && returnCode == -1) {
-      SDL_GL_SetSwapInterval(VSYNC_ON);
+    if (setting == Window::ADAPTIVE_SYNC_ON && returnCode == -1) {
+      SDL_GL_SetSwapInterval(Window::VSYNC_ON);
     }
+  }
+
+  // 1 for vsync, 0 for no vsync, -1 for adaptive sync
+  int Window::GetVsync() {
+    return SDL_GL_GetSwapInterval();
   }
 
   void Window::SwapBuffers() {
     SDL_GL_SwapWindow((SDL_Window*)m_window);
+  }
+
+  void Window::Clear(float r, float g, float b, float a) {
+    glClearColor(r,g,b,a);
+    glClear(GL_COLOR_BUFFER_BIT);
   }
 }

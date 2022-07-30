@@ -5,6 +5,8 @@
 namespace sbl {
   void Engine::Init() {
     SDL_Init(SDL_INIT_EVERYTHING);
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
   }
 
   void Engine::Terminate() {

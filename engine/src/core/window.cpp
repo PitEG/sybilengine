@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 #include <glad/glad.h>
+#include <imgui_impl_sdl.h>
 #include <cstring>
 
 namespace sbl {
@@ -63,7 +64,7 @@ namespace sbl {
     // if there are any queued events, process them
     while (SDL_PollEvent(&ev) != 0) {
       // for imgui, this probably isn't necessary
-      // ImGui_ImplSDL2_ProcessEvent(&ev);
+      ImGui_ImplSDL2_ProcessEvent(&ev);
 
       // SDL_Log("%d", ev.type);
       if (ev.type == SDL_WINDOWEVENT) {

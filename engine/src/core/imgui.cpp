@@ -29,6 +29,7 @@ namespace sbl {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   }
 
+  // uuuhh no bueno
   void ImGUI::ProcessEvents(Window& window) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {

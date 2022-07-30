@@ -20,7 +20,7 @@ int main() {
 
     window.Clear();
 
-    sbl::ImGUI::ProcessEvents(window);
+    // sbl::ImGUI::ProcessEvents(window);
     sbl::Input input = window.PollInput();
 
     if (input.GetKey(sbl::KeyCode::ESCAPE)) {

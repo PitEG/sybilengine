@@ -1,9 +1,11 @@
 add_library(sybilengine SHARED sybilengine.cpp)
 
 add_subdirectory(core)
+add_subdirectory(util)
 
 set(SYBIL_ENGINE_MODULES
   sybilengine_core
+  sybilengine_util
   )
 
 target_link_libraries(sybilengine PUBLIC ${SYBIL_ENGINE_MODULES})

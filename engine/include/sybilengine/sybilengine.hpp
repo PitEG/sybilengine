@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sybilengine/core.hpp"
-#include <imgui.h>
+#include "sybilengine/util.hpp"
 
 namespace sbl {
   class Engine {

@@ -9,3 +9,4 @@
 #include "sybilengine/util/timeunit.hpp"
 #include "sybilengine/util/vec.hpp"
 #include "sybilengine/util/stopwatch.hpp"
+#include "sybilengine/util/rect.hpp"

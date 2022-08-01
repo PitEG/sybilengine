@@ -37,8 +37,7 @@ int main() {
       window.Close();
     }
     if (input.GetKey(sbl::KeyCode::SPACE)) {
-      std::cout << "pressed space" << std::endl;
-      window.Clear(0.9f,0.9f,0.9f,1);
+      window.Clear(0.9f,0.9f,0.3f,1);
     }
 
     sbl::ImGUI::NewFrame();

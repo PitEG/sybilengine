@@ -16,6 +16,11 @@ namespace sbl {
     static const float PI;
 
     /**
+     * @brief float precise value of tau. 
+     */
+    static const float TAU;
+
+    /**
      * @brief Converts degrees into radians.
      * 
      * @param d degrees.

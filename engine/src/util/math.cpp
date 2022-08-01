@@ -4,6 +4,7 @@
 
 namespace sbl {
   const float Math::PI = atan(1) * 4;
+  const float Math::TAU = atan(1) * 8;
 
   float Math::DegreeToRad(const float d) {
     static const float DEGREE_TO_RAD = Math::PI / 180.f;

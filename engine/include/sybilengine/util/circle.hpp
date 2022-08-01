@@ -1,55 +1,82 @@
 #pragma once
 
 #include "sybilengine/util/vec.hpp"
+#include "sybilengine/util/math.hpp"
 
 namespace sbl {
-  /**
-   * @brief Generic Circle object
-   * 
-   */
+  template<class T> struct Circle;
+
+  using Circlef = Circle<float>;
+  using Circled = Circle<double>;
+
+  template<class T>
   struct Circle {
-  public:
-    /**
-     * @brief Radius is defined by the center (and radius)
-     */
-    Vec2f center;
-    /**
-     * @brief Radius is defined by the radius (and center)
-     */
-    float   radius;
+    T x; // center x
+    T y; // center y
+    T r; // radius
 
-    /**
-     * @brief Construct a default Circle object
-     * 
-     * @param center center of circle
-     * @param radius radius of circle
-     */
-    Circle(Vec2f center = Vec2f::Zero(), float radius = 1);
+    constexpr Circle();
+    constexpr Circle(const T x, const T y, const T radius);
+    constexpr Circle(const Vec2<T>& center, const T radius);
+    constexpr Circle(const Circle<T>& other);
 
-    Circle(const Circle& other);
-
-    /**
-     * @brief Get the Area of the circle. pi * radius ^ 2
-     * 
-     * @return float Area of circle.
-     */
-    float Area() const;
-    /**
-     * @brief Get circumference of the circle. 2 * pi * radius
-     * 
-     * @return float Circumference of the circle.
-     */
-    float Circumference() const;
-
-  public:
-    /**
-     * @brief Check to see if two given circles overlap in space.
-     * 
-     * @param a Circle a
-     * @param b Circle b
-     * @return true If the circles overlap
-     * @return false If the cirlces do not overlap
-     */
-    static bool Overlap(const Circle& a, const Circle& b);
+    constexpr Vec2<T> Center() const;
+    constexpr T Area() const;
+    constexpr T Circumference() const;
+    constexpr void Displace(const T x, const T y);
+    constexpr void Displace(const Vec2<T>& displacement);
+    static constexpr bool Overlap(Circle<T>& a, Circle<T>& b);
   };
+
+  template<class T>
+  constexpr Circle<T>::Circle() 
+  : x(0), y(0), r(1) {
+  }
+
+  template<class T>
+  constexpr Circle<T>::Circle(const T x, const T y, const T radius) 
+  : x(x), y(y), r(r) {
+  }
+
+  template<class T>
+  constexpr Circle<T>::Circle(const Vec2<T>& center, const T radius) 
+  : x(center.x), y(center.y), r(r) {
+  }
+
+  template<class T>
+  constexpr Circle<T>::Circle(const Circle<T>& other) 
+  : x(other.x), y(other.y), r(other.r) {
+  }
+
+  template<class T>
+  constexpr Vec2<T> Circle<T>::Center() const {
+    return Vec2<T>(x,y);
+  }
+
+  template<class T>
+  constexpr T Circle<T>::Area() const {
+    return Math::PI * std::pow(r,2);
+  }
+
+  template<class T>
+  constexpr T Circle<T>::Circumference() const {
+    return Math::TAU * r;
+  }
+  
+  template<class T>
+  constexpr void Circle<T>::Displace(const T x, const T y) {
+  }
+
+  template<class T>
+  constexpr void Circle<T>::Displace(const Vec2<T>& displacement) {
+  }
+
+  template<class T>
+  constexpr bool Circle<T>::Overlap(Circle<T>& a, Circle<T> &b) {
+    bool overlapping = false;
+    float distance = Vec2f::Distance(a.center,b.center);
+    float radiusSum = a.radius + b.radius;
+    if (distance <= radiusSum) { overlapping = true; }
+    return overlapping;
+  }
 }

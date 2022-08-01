@@ -1,5 +1,4 @@
 set(SRC
-  circle.cpp
   math.cpp
   random.cpp
   time.cpp

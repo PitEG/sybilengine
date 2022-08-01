@@ -68,6 +68,6 @@ namespace sbl {
 
   template<class T>
   constexpr Vec2<T> Quad<T>::TR() const {
-    return Vec2<T>(t,r);
+    return Vec2<T>(r,t);
   }
 }

@@ -3,6 +3,11 @@
 #include <sybilengine/util/vec.hpp>
 
 namespace sbl {
+  template<class T> struct Quad;
+
+  using Quadf = Quad<float>;
+  using Quadd = Quad<double>;
+
   /**
    * very much like the rect struct except it explicitly stores
    * information for every corner. The use case would be for any

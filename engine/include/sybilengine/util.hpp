@@ -10,3 +10,4 @@
 #include "sybilengine/util/vec.hpp"
 #include "sybilengine/util/stopwatch.hpp"
 #include "sybilengine/util/rect.hpp"
+#include "sybilengine/util/quad.hpp"

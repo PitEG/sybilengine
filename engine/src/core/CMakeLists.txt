@@ -1,6 +1,7 @@
 set(CORE_SRC
   window.cpp
   imgui.cpp
+  filesystem.cpp
   )
 
 set(SRC ${CORE_SRC})

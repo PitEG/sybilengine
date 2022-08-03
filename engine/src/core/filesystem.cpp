@@ -15,12 +15,22 @@ namespace sbl {
 
   unsigned long FileSystem::ReadFile::Read(std::vector<uint8_t>& buffer) {
     if (m_io == nullptr) { return -1; }
-    return SDL_RWread((SDL_RWops*)m_io, (void*)buffer.data(), buffer.size(), 1);
+    return SDL_RWread((SDL_RWops*)m_io, (void*)buffer.data(), 1, buffer.size());
   }
 
   FileSystem::ReadFile FileSystem::OpenRead(std::string path) {
     SDL_RWops* io = SDL_RWFromFile(path.c_str(),"r");
     return FileSystem::ReadFile(io);
+  }
+
+  std::string FileSystem::ReadFile::ReadAllString() {
+    std::string str;
+    std::vector<uint8_t> buf(512);
+    int bytes = 0;
+    while((bytes = Read(buf)) > 0) {
+      str.append(std::string(buf.begin(), buf.begin()+bytes));
+    }
+    return str;
   }
 
   void FileSystem::ReadFile::Close() {

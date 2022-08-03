@@ -17,6 +17,8 @@ namespace sbl {
 
       unsigned long Size();
       unsigned long Read(std::vector<uint8_t>& buffer);
+      std::string ReadAllString();
+
       void Close();
 
     private:

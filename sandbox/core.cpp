@@ -1,4 +1,3 @@
-#include <cstddef>
 #include <sybilengine/sybilengine.hpp>
 
 #include <iostream>
@@ -6,6 +5,8 @@
 #include <imgui.h>
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
+
+#include <SDL2/SDL.h>
 
 int main() {
   sbl::Engine::Init();
@@ -24,7 +25,7 @@ int main() {
   double current_frame = last_frame;
   bool vsync_on = true;
   char file_name[1024] = "placeholder";
-  std::vector<uint8_t> file_contents(2'000);
+  std::string file_contents = "";
 
   while(!window.IsClosed()) {
     double frame_time = current_frame - last_frame;
@@ -78,11 +79,11 @@ int main() {
       ImGui::Text("user: %s", sbl::FS::USER_PATH.c_str());
       if (ImGui::Button("read file")) {
         sbl::FS::ReadFile file = sbl::FS::OpenRead(file_name);
-        file.Read(file_contents);
+        file_contents = file.ReadAllString();
         file.Close();
       }
       ImGui::InputText("file name",file_name,IM_ARRAYSIZE(file_name));
-      ImGui::Text("%s", (char*)file_contents.data());
+      ImGui::Text("%s", file_contents.c_str());
       ImGui::End();
     }
     bool a = true;

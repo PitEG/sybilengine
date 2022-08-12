@@ -7,6 +7,7 @@
 namespace sbl {
   class FileSystem;
   using FS = FileSystem;
+  using byte = uint8_t;
 
   class FileSystem {
   public:
@@ -16,7 +17,7 @@ namespace sbl {
       ~ReadFile();
 
       unsigned long Size();
-      unsigned long Read(std::vector<uint8_t>& buffer);
+      unsigned long Read(std::vector<byte>& buffer);
       std::string ReadAllString();
 
       void Close();
@@ -31,7 +32,7 @@ namespace sbl {
     public:
       ~WriteFile();
 
-      unsigned long Write(std::vector<uint8_t>& buffer, unsigned int amount);
+      unsigned long Write(std::vector<byte>& buffer, unsigned int amount);
       void Close();
 
     private:

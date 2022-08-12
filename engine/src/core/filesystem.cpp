@@ -4,6 +4,7 @@
 #include <SDL2/SDL_filesystem.h>
 
 namespace sbl {
+  // READ FILE
 
   FileSystem::ReadFile::ReadFile(void* io) 
   : m_io(io) {
@@ -13,7 +14,7 @@ namespace sbl {
     Close();
   }
 
-  unsigned long FileSystem::ReadFile::Read(std::vector<uint8_t>& buffer) {
+  unsigned long FileSystem::ReadFile::Read(std::vector<byte>& buffer) {
     if (m_io == nullptr) { return -1; }
     return SDL_RWread((SDL_RWops*)m_io, (void*)buffer.data(), 1, buffer.size());
   }
@@ -25,7 +26,7 @@ namespace sbl {
 
   std::string FileSystem::ReadFile::ReadAllString() {
     std::string str;
-    std::vector<uint8_t> buf(512);
+    std::vector<byte> buf(512);
     int bytes = 0;
     while((bytes = Read(buf)) > 0) {
       str.append(std::string(buf.begin(), buf.begin()+bytes));
@@ -47,6 +48,8 @@ namespace sbl {
   FileSystem::WriteFile::~WriteFile() {
     Close();
   }
+
+  // OPEN FILE
 
   FileSystem::WriteFile FileSystem::OpenWrite(std::string path) {
     SDL_RWops* io = SDL_RWFromFile(path.c_str(),"w");

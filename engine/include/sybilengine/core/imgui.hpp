@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sybilengine/core/window.hpp"
+#include "imgui.h"
 
 namespace sbl {
   class ImGUI {

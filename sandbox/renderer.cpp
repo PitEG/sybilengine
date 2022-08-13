@@ -9,6 +9,7 @@ void GLAPIENTRY MessageCallback( GLenum source,
                  GLsizei length,
                  const GLchar* message,
                  const void* userParam ) {
+  if (type != GL_DEBUG_TYPE_ERROR) { return; } // skip non errors
   SDL_Log("GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
             type, severity, message );
@@ -20,8 +21,8 @@ int main() {
   window.SetVsync(sbl::Window::VSYNC_ON);
   sbl::ImGUI::CreateContext(window);
 
-  // glEnable(GL_DEBUG_OUTPUT);
-  // glDebugMessageCallback(MessageCallback, 0);
+  glEnable(GL_DEBUG_OUTPUT);
+  glDebugMessageCallback(MessageCallback, 0);
 
   sbl::Renderer renderer(&window);
 

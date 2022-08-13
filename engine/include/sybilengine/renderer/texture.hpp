@@ -21,13 +21,13 @@ namespace sbl {
     };
 
   Texture(std::string path);
-  Texture(unsigned int w, unsigned int h);
+  Texture(unsigned int w, unsigned int h); // make an empty texture
 
   void GenerateMipmaps();
   ~Texture();
 
   private:
-    void* m_texture;
+    unsigned int m_textureId;
     Wrap m_wrap;
     Filter m_filter;
   };

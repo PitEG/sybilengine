@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <set>
 #include <string>
+#include <regex>
 
 #include <chrono>
 #include <cmath>

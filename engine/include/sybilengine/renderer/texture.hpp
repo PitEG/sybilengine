@@ -27,7 +27,7 @@ namespace sbl {
   ~Texture();
 
   private:
-    unsigned int m_textureId;
+    unsigned int m_id;
     Wrap m_wrap;
     Filter m_filter;
   };

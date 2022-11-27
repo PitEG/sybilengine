@@ -10,7 +10,8 @@ namespace sbl {
   Window::Window(
       const std::string title, 
       const unsigned int width, 
-      const unsigned int height) {
+      const unsigned int height,
+      const bool resizable) {
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Always required on Mac
@@ -19,13 +20,15 @@ namespace sbl {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
+    int r = resizable ? SDL_WINDOW_RESIZABLE : 0;
+
     m_window = SDL_CreateWindow(
         title.c_str(), 
         SDL_WINDOWPOS_UNDEFINED, 
         SDL_WINDOWPOS_UNDEFINED, 
         width, 
         height,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
+        SDL_WINDOW_OPENGL | r | SDL_WINDOW_SHOWN);
 
     // handle error here 
     if (m_window == NULL) {

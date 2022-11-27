@@ -14,7 +14,8 @@ namespace sbl {
     Window(
         const std::string title = "sybil", 
         const unsigned int width = 1280, 
-        const unsigned int height = 720);
+        const unsigned int height = 720,
+        const bool resizable = true);
     ~Window();
 
     Input PollInput();

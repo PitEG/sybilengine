@@ -1,3 +1,4 @@
+#include "sybilengine/util/vec.hpp"
 #include <sybilengine/sybilengine.hpp>
 #include <iostream>
 
@@ -37,12 +38,12 @@ int main() {
 
   std::vector<float> vertices = {
     // positions
-    0.5f, -0.5f, 0.0f,  
-    -0.5f, -0.5f, 0.0f,  
-    0.0f,  0.5f, 0.0f, 
+    0.1f, -0.1f, 0.0f,  
+    -0.1f, -0.1f, 0.0f,  
+    0.0f,  0.1f, 0.0f, 
   };
-  unsigned int amount = 1000;
-  sbl::SpriteBatch batch(vertices, shader, amount);
+  unsigned int amount = 10000;
+  sbl::SpriteBatch batch(vertices, shader);
   sbl::Sprite sprite1;
   sbl::Sprite sprite2;
   sprite1.position = sbl::Vec2f(0,0);
@@ -51,8 +52,15 @@ int main() {
   sprite2.color = sbl::Color(0,1,0,0);
   batch.Add(sprite1);
   batch.Add(sprite2);
-  for (int i = 0; i < amount; i++) {
-    batch.Add(sprite1);
+  int half = amount/2;
+  int sqrt = sbl::Math::Sqrt(amount);
+  for (int i = 0; i < sqrt; i++) {
+    for (int j = 0; j < sqrt; j++) {
+      float x = (float)(i*sqrt- half)*2/amount;
+      float y = (float)(j*sqrt - half)*2/amount;
+      sprite1.position = sbl::Vec2f(x,y);
+      batch.Add(sprite1);
+    }
   }
 
   // debug display stuff
@@ -79,8 +87,8 @@ int main() {
       ImGui::Text("%s", shader.GetError().c_str());
       ImGui::End();
     }
-    bool imgui_demo = true;
-    ImGui::ShowDemoWindow(&imgui_demo);
+    // bool imgui_demo = true;
+    // ImGui::ShowDemoWindow(&imgui_demo);
     sbl::ImGUI::Render();
 
     window.SwapBuffers();

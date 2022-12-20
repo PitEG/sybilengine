@@ -2,10 +2,10 @@ R""(
 #version 460 core
 out vec4 FragColor;
 
-in vec3 color;
+in vec4 inColor;
 
 void main() {
-  FragColor = vec4(color, 1);
+  FragColor = inColor;
   // FragColor = vec4(1);
 }
 )""

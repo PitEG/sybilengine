@@ -38,6 +38,9 @@ namespace sbl {
     : r(r), g(g), b(b), a(a) {
     }
 
+    Color() : Color(1,1,1,1) {
+    }
+
     /*
      * Shorthand colors
      */

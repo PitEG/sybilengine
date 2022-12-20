@@ -14,7 +14,8 @@ namespace sbl {
     ~Renderer();
 
     void DrawToScreen();
-    void DrawSpriteBatch(FrameBuffer& fb, const View& view, const Texture& texture, const SpriteBatch& spriteBatch);
+    // void DrawSpriteBatch(FrameBuffer& fb, const View& view, const Texture& texture, const Shader& shader, const SpriteBatch& spriteBatch);
+    void DrawSpriteBatch(const Shader& shader, const SpriteBatch& spriteBatch);
     void Test(const Shader& shader);
   private:
     Window* m_window;

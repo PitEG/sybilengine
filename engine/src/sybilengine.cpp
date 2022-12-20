@@ -7,7 +7,7 @@
 
 namespace sbl {
   void Engine::Init() {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_TIMER |SDL_INIT_SENSOR);
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
   }

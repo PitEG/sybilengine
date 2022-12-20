@@ -1,4 +1,5 @@
 #include <sybilengine/sybilengine.hpp>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <SDL2/SDL.h>
@@ -35,46 +36,31 @@ int main() {
   shader.Compile();
 
   std::vector<float> vertices = {
-    // positions         // colors
-    0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-    0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+    // positions
+    0.5f, -0.5f, 0.0f,  
+    -0.5f, -0.5f, 0.0f,  
+    0.0f,  0.5f, 0.0f, 
   };
-  unsigned int VBO, VAO;
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-  // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-  glBindVertexArray(VAO);
-
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-  // position attribute
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-  // color attribute
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-  glEnableVertexAttribArray(1);
-
   sbl::SpriteBatch batch(vertices);
   sbl::Sprite sprite1;
   sbl::Sprite sprite2;
   sprite1.position = sbl::Vec2f(0,0);
-  sprite1.position = sbl::Vec2f(0.5f,0.5f);
+  sprite2.position = sbl::Vec2f(0.5f,0.5f);
+  sprite1.color = sbl::Color(1,0,0,0);
+  sprite2.color = sbl::Color(0,1,0,0);
   batch.Add(sprite1);
   batch.Add(sprite2);
+  for (int i = 0; i < 1'000; i++) {
+    batch.Add(sprite1);
+  }
 
-  const std::vector<sbl::Sprite> instance_data = batch.entries.GetData();
-
-  unsigned int instance_buffer;
-  glGenBuffers(1, &instance_buffer);
-  glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
-  glBufferData(GL_ARRAY_BUFFER, instance_data.size() * (sizeof(sbl::Sprite)+sizeof(int)), instance_data.data(), GL_STATIC_DRAW);
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2,3,GL_FLOAT,GL_FALSE,(sizeof(sbl::Sprite) + sizeof(int)),(void*)0);
-  glVertexAttribDivisor(2,1);
-
+  // debug display stuff
+  sbl::Stopwatch stopwatch = sbl::Stopwatch();
+  stopwatch.Reset();
+  double last_frame = stopwatch.ElapsedTime();
+  double current_frame = last_frame;
   while(!window.IsClosed()) {
+    double frame_time = current_frame - last_frame;
     window.Clear(0.5f,0.5f,0.5f,1);
 
     sbl::Input input = window.PollInput();
@@ -82,14 +68,13 @@ int main() {
       window.Close();
     }
 
-    renderer.Test(shader);
-    glBindVertexArray(VAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, sizeof(float) * vertices.size(), batch.Size());
+    renderer.DrawSpriteBatch(shader, batch);
 
     sbl::ImGUI::NewFrame();
     {
       ImGui::Begin("debug");
-      ImGui::Text("%d", (int)instance_data.size());
+      ImGui::Text("frame time: %lf", frame_time);
+      ImGui::Text("frame rate: %lf", 1 / frame_time);
       ImGui::Text("%s", shader.GetError().c_str());
       ImGui::End();
     }
@@ -99,6 +84,8 @@ int main() {
 
     window.SwapBuffers();
     // window.Close();
+    last_frame = current_frame;
+    current_frame = stopwatch.ElapsedTime();
   }
 
   sbl::Engine::Terminate();

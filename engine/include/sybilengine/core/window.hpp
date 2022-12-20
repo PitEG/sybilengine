@@ -28,7 +28,7 @@ namespace sbl {
   private:
     void* m_window;
     void* m_graphicsContext;
-    bool m_closed;
+    bool m_closed = false;
 
     friend class ImGUI;
   };

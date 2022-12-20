@@ -20,6 +20,8 @@ namespace sbl {
      */
     FreeList();
 
+    FreeList(const unsigned int reserveSize);
+
     /**
      * @brief Add an element to the list.
      * 

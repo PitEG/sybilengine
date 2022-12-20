@@ -19,7 +19,7 @@ void GLAPIENTRY MessageCallback( GLenum source,
 int main() {
   sbl::Engine::Init();
   sbl::Window window = sbl::Window("test");
-  window.SetVsync(sbl::Window::VSYNC_ON);
+  window.SetVsync(sbl::Window::VSYNC_OFF);
   sbl::ImGUI::CreateContext(window);
 
   glEnable(GL_DEBUG_OUTPUT);
@@ -41,7 +41,8 @@ int main() {
     -0.5f, -0.5f, 0.0f,  
     0.0f,  0.5f, 0.0f, 
   };
-  sbl::SpriteBatch batch(vertices);
+  unsigned int amount = 1000;
+  sbl::SpriteBatch batch(vertices, shader, amount);
   sbl::Sprite sprite1;
   sbl::Sprite sprite2;
   sprite1.position = sbl::Vec2f(0,0);
@@ -50,7 +51,7 @@ int main() {
   sprite2.color = sbl::Color(0,1,0,0);
   batch.Add(sprite1);
   batch.Add(sprite2);
-  for (int i = 0; i < 1'000; i++) {
+  for (int i = 0; i < amount; i++) {
     batch.Add(sprite1);
   }
 
@@ -68,7 +69,7 @@ int main() {
       window.Close();
     }
 
-    renderer.DrawSpriteBatch(shader, batch);
+    renderer.DrawSpriteBatch(batch);
 
     sbl::ImGUI::NewFrame();
     {

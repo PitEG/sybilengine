@@ -4,6 +4,8 @@
 #include "sybilengine/renderer/shader.hpp"
 #include "sybilengine/renderer/framebuffer.hpp"
 #include "sybilengine/renderer/batch.hpp"
+#include "sybilengine/renderer/texture.hpp"
+#include "sybilengine/renderer/view.hpp"
 
 namespace sbl {
   class Renderer {
@@ -12,7 +14,7 @@ namespace sbl {
     ~Renderer();
 
     void DrawToScreen();
-    void DrawSpriteBatch(FrameBuffer& fb, SpriteBatch& spriteBatch);
+    void DrawSpriteBatch(FrameBuffer& fb, const View& view, const Texture& texture, const SpriteBatch& spriteBatch);
     void Test(const Shader& shader);
   private:
     Window* m_window;

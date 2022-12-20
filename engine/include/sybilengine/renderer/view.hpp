@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sybilengine/util/quad.hpp"
 #include "sybilengine/util/rect.hpp"
 
 namespace sbl {

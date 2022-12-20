@@ -71,7 +71,7 @@ int main() {
   glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
   glBufferData(GL_ARRAY_BUFFER, instance_data.size() * (sizeof(sbl::Sprite)+sizeof(int)), instance_data.data(), GL_STATIC_DRAW);
   glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2,3,GL_FLOAT,GL_FALSE,3*sizeof(float),(void*)0);
+  glVertexAttribPointer(2,3,GL_FLOAT,GL_FALSE,(sizeof(sbl::Sprite) + sizeof(int)),(void*)0);
   glVertexAttribDivisor(2,1);
 
   while(!window.IsClosed()) {

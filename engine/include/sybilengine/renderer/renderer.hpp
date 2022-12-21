@@ -17,6 +17,14 @@ namespace sbl {
     // void DrawSpriteBatch(FrameBuffer& fb, const View& view, const Texture& texture, const Shader& shader, const SpriteBatch& spriteBatch);
     void DrawSpriteBatch(const SpriteBatch& spriteBatch);
     void Test(const Shader& shader);
+    
+    template<class T>
+    static void DrawBatch(
+        FrameBuffer& fb,
+        View& view,
+        Texture& texture,
+        Batch<T>& batch
+        );
   private:
     Window* m_window;
   };

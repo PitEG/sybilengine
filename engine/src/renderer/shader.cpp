@@ -68,4 +68,8 @@ namespace sbl {
   const std::string& Shader::GetError() const {
     return m_error;
   }
+
+  unsigned int Shader::GetShaderID() const {
+    return m_shaderId;
+  }
 }

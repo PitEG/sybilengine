@@ -13,6 +13,8 @@ namespace sbl {
     Shader(std::string vertex, std::string fragment);
     ~Shader();
 
+    unsigned int GetShaderID() const;
+
     bool Set(std::string vertex, std::string fragment);
     bool SetVertex(std::string src);
     bool SetFragment(std::string src);

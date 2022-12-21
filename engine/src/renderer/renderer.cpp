@@ -20,7 +20,12 @@ namespace sbl {
   // makes a vertex array and two buffers on the fly, sort of expensive.
   void Renderer::DrawSpriteBatch(const SpriteBatch& batch) {
     glDisable(GL_DEPTH_TEST);
-    std::vector<float> vertices = batch.vertices;
+    std::vector<float> vertices = {
+      // positions
+       0.5f, -0.5f, 
+      -0.5f, -0.5f, 
+       0.0f,  0.5f, 
+    };
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -30,7 +35,7 @@ namespace sbl {
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
     // position attribute
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     
     const std::vector<sbl::Sprite>& instances = batch.entries.GetData();
     unsigned int instance_buffer;
@@ -46,7 +51,7 @@ namespace sbl {
     // glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
     // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Sprite) * batch.Size(), batch.entries.GetData().data());
 
-    glUseProgram(batch.shader.m_shaderId);
+    glUseProgram(batch.shader.GetShaderID());
     glBindVertexArray(VAO);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 3, batch.Size());
 

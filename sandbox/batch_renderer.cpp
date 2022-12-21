@@ -38,12 +38,13 @@ int main() {
 
   std::vector<float> vertices = {
     // positions
-    0.1f, -0.1f, 0.0f,  
-    -0.1f, -0.1f, 0.0f,  
-    0.0f,  0.1f, 0.0f, 
+    0.1f, -0.1f, 
+    -0.1f, -0.1f, 
+    0.0f,  0.1f, 
   };
-  unsigned int amount = 10000;
+  std::vector<unsigned int> sizes = {3};
   sbl::SpriteBatch batch(vertices, shader);
+  batch.sizes = sizes;
   sbl::Sprite sprite1;
   sbl::Sprite sprite2;
   sprite1.position = sbl::Vec2f(0,0);
@@ -52,13 +53,14 @@ int main() {
   sprite2.color = sbl::Color(0,1,0,0);
   batch.Add(sprite1);
   batch.Add(sprite2);
+  unsigned int amount = 20000;
   int half = amount/2;
   int sqrt = sbl::Math::Sqrt(amount);
   for (int i = 0; i < sqrt; i++) {
     for (int j = 0; j < sqrt; j++) {
-      float x = (float)(i*sqrt- half)*2/amount;
-      float y = (float)(j*sqrt - half)*2/amount;
-      sprite1.position = sbl::Vec2f(x,y);
+      // float x = (float)(i*sqrt- half)*2/amount;
+      // float y = (float)(j*sqrt - half)*2/amount;
+      // sprite1.position = sbl::Vec2f(x,y);
       batch.Add(sprite1);
     }
   }

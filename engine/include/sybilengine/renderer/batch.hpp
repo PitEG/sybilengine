@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sys/types.h>
 #include <vector>
 
 #include "sybilengine/core/keycode.hpp"
@@ -17,9 +18,16 @@ namespace sbl {
   template<class T>
   class Batch {
   public:
-    std::vector<float> vertices; //base vertex data
-    Shader shader;
+    // base vertex stuff
+    std::vector<float> vertices; // actual vertices
+    std::vector<unsigned int> vertexSizes; //sizes of each vertex 
     FreeList<T> entries;
+    // instance stuff
+    std::vector<unsigned int> attribLocations;
+    std::vector<unsigned int> attribSizes;
+    std::vector<unsigned int> attribType;
+    std::vector<unsigned int> attribNorm;
+    Shader shader;
 
     Batch(const std::vector<float>& vertices, const Shader& shader, const unsigned int maxInstances = 1000 /* doesn't do anything */);
 

@@ -17,18 +17,28 @@ namespace sbl {
     glUseProgram(shader.m_shaderId);
   }
 
+  struct BatchSetup {
+    unsigned int VBO, VAO, IBO;
+    BatchSetup() {
+      glGenVertexArrays(1, &VAO);
+      glGenBuffers(1, &VBO);
+      glGenBuffers(1, &IBO);
+    }
+  };
+
   // makes a vertex array and two buffers on the fly, sort of expensive.
   void Renderer::DrawSpriteBatch(const SpriteBatch& batch) {
-    glDisable(GL_DEPTH_TEST);
-    std::vector<float> vertices = {
+    static std::vector<float> vertices = {
       // positions
        0.5f, -0.5f, 
       -0.5f, -0.5f, 
        0.0f,  0.5f, 
     };
-    unsigned int VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    static BatchSetup batchSetup;
+    unsigned int VBO = batchSetup.VBO;
+    unsigned int VAO = batchSetup.VAO;
+    // glGenVertexArrays(1, &VAO);
+    // glGenBuffers(1, &VBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -38,8 +48,7 @@ namespace sbl {
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     
     const std::vector<sbl::Sprite>& instances = batch.entries.GetData();
-    unsigned int instance_buffer;
-    glGenBuffers(1, &instance_buffer);
+    unsigned int instance_buffer = batchSetup.IBO;
     glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Sprite) * batch.Size(), instances.data(), GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
@@ -59,8 +68,8 @@ namespace sbl {
     // glBindVertexArray(batch.m_vao);
     // glDrawArraysInstanced(GL_TRIANGLES, 0, 3, batch.Size());
 
-    glDeleteBuffers(1,&VBO);
-    glDeleteBuffers(1,&instance_buffer);
-    glDeleteVertexArrays(1,&VAO);
+    // glDeleteBuffers(1,&VBO);
+    // glDeleteBuffers(1,&instance_buffer);
+    // glDeleteVertexArrays(1,&VAO);
   }
 }

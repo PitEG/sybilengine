@@ -28,6 +28,8 @@ namespace sbl {
 
   private:
     unsigned int m_id;
+    unsigned int m_width;
+    unsigned int m_height;
     Wrap m_wrap;
     Filter m_filter;
   };

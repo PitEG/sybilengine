@@ -30,6 +30,7 @@ namespace sbl {
     Shader shader;
 
     Batch(const std::vector<float>& vertices, const Shader& shader, const unsigned int maxInstances = 1000 /* doesn't do anything */);
+    Batch();
 
     inline unsigned int Size() const {
       return entries.Capacity();

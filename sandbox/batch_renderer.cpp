@@ -72,7 +72,7 @@ int main() {
     }
 
     renderer.DrawToScreen(window,sbl::Rectui(0,0,0,0),text,sbl::Rectf(0,0,0,0));
-    renderer.DrawSprites(fb,sprites, text);
+    renderer.DrawSprites(fb,sprites, sybilText);
 
     sbl::ImGUI::NewFrame();
     {

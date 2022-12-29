@@ -28,23 +28,11 @@ int main() {
 
   sbl::Renderer renderer(&window);
 
-  sbl::Shader shader(
-#include "glsl/sprite_batch_vs.glsl"
-        ,
-#include "glsl/sprite_batch_fs.glsl"
-        );
-
-  shader.Compile();
-
-  std::vector<float> vertices = {
-    // positions
-    0.1f, -0.1f, 
-    -0.1f, -0.1f, 
-    0.0f,  0.1f, 
-  };
-
   sbl::FrameBuffer fb;
-  sbl::Texture text(1,1);
+  sbl::Texture text(2,2);
+
+  fb.AttachTexture(text);
+  fb.Clear(1,1,0,1);
 
   std::vector<sbl::Sprite> sprites;
   sbl::Sprite sprite1;
@@ -55,7 +43,7 @@ int main() {
   sprite2.color = sbl::Color(0,1,0,0);
   sprites.push_back(sprite1);
   sprites.push_back(sprite2);
-  unsigned int amount = 10000;
+  unsigned int amount = 10;
   int half = amount/2;
   int sqrt = sbl::Math::Sqrt(amount);
   for (int i = 0; i < sqrt; i++) {
@@ -89,7 +77,6 @@ int main() {
       ImGui::Begin("debug");
       ImGui::Text("frame time: %lf", frame_time);
       ImGui::Text("frame rate: %lf", 1 / frame_time);
-      ImGui::Text("%s", shader.GetError().c_str());
       ImGui::End();
     }
     // bool imgui_demo = true;

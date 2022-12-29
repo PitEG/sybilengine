@@ -120,6 +120,7 @@ namespace sbl {
   }
 
   void Window::Clear(float r, float g, float b, float a) {
+    glBindFramebuffer(GL_FRAMEBUFFER, 0); // bind default framebuffer
     glClearColor(r,g,b,a);
     glClear(GL_COLOR_BUFFER_BIT);
   }

@@ -13,10 +13,6 @@ namespace sbl {
   void Renderer::DrawToScreen() {
   }
 
-  void Renderer::Test(const Shader& shader) {
-    glUseProgram(shader.m_shaderId);
-  }
-
   struct SpriteSetup {
     unsigned int VBO, VAO, IBO;
     Shader shader = Shader(
@@ -62,15 +58,15 @@ namespace sbl {
     glVertexAttribPointer(2,4,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)(sizeof(Vec2f)));
     glVertexAttribDivisor(2,1);
 
-    glUseProgram(spriteSetup.shader.GetShaderID());
+    // bind framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, 0); // currently binding default framebuffer
+    // bind texture
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture.GetID());
+    // bind shader
+    glUseProgram(spriteSetup.shader.GetID());
+    glUniform1i(glGetUniformLocation(spriteSetup.shader.GetID(),"texture0"),0);
     glBindVertexArray(VAO);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, sprites.size());
-
-    // glDeleteBuffers(1,&VBO);
-    // glDeleteBuffers(1,&instance_buffer);
-    // glDeleteVertexArrays(1,&VAO);
-  }
-
-  void DrawBatch(FrameBuffer& fb, const Batch& batch) {
   }
 }

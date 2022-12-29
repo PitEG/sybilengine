@@ -10,6 +10,6 @@ namespace sbl {
     Color color;
     Vec2f origin;
     Vec2f size;
-    int texture_id;
+    unsigned int texture;
   };
 }

@@ -21,8 +21,8 @@ namespace sbl {
       LinearMipmapLinear
     };
 
-  Texture(std::string path);
-  Texture(unsigned int w, unsigned int h); // make an empty texture
+  Texture(const std::string& path);
+  Texture(const unsigned int w, const unsigned int h); // make an empty texture
 
   void GenerateMipmaps();
   ~Texture();
@@ -33,8 +33,8 @@ namespace sbl {
 
   private:
     unsigned int m_id;
-    unsigned int m_width;
-    unsigned int m_height;
+    int m_width;
+    int m_height;
     Wrap m_wrap;
     Filter m_filter;
   };

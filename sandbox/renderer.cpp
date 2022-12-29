@@ -60,7 +60,7 @@ int main() {
   while(!window.IsClosed()) {
     window.Clear(0.5f,0.5f,0.5f,1);
 
-    renderer.Test(shader); // this just binds the shader program
+    // renderer.Test(shader); // this just binds the shader program
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

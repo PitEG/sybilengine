@@ -14,9 +14,11 @@ namespace sbl {
     Renderer(Window* window);
     ~Renderer();
 
-    void DrawToScreen();
+    // void DrawToScreen();
     // void DrawSpriteBatch(const SpriteBatch& spriteBatch);
     void Test(const Shader& shader);
+    static void DrawToScreen();
+    static void Clear(const FrameBuffer& fb);
     static void DrawBatch(FrameBuffer& fb, const Batch& batch);
     static void DrawSprites(FrameBuffer& fb, const std::vector<Sprite>& sprite, const Texture& texture);
 

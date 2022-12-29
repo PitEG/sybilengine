@@ -16,6 +16,12 @@ message("found SDL2")
 include_directories(${SDL2_INCLUDE_DIRS})
 message("added SDL2")
 
+# STB IMAGE
+set(STB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/stbimage)
+set(STB_INC ${STB_DIR})
+add_library(stb_image SHARED ${STB_DIR}/stb_image.cpp)
+target_include_directories(stb_image PUBLIC ${STB_INC})
+
 # IMGUI
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui CACHE PATH "imgui dir in engine vendor")
 set(IMGUI_INC ${IMGUI_DIR} ${IMGUI_DIR}/backends CACHE PATH "imgui inc directory")

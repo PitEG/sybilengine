@@ -69,7 +69,7 @@ namespace sbl {
     return m_error;
   }
 
-  unsigned int Shader::GetShaderID() const {
+  unsigned int Shader::GetID() const {
     return m_shaderId;
   }
 }

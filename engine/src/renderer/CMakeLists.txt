@@ -1,6 +1,7 @@
 set(RENDERER_SRC
   renderer.cpp
   shader.cpp
+  texture.cpp
   )
 
 set(SRC ${RENDERER_SRC})

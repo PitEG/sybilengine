@@ -5,6 +5,7 @@
 #include "sybilengine/renderer/framebuffer.hpp"
 #include "sybilengine/renderer/batch.hpp"
 #include "sybilengine/renderer/texture.hpp"
+#include "sybilengine/renderer/sprite.hpp"
 #include "sybilengine/renderer/view.hpp"
 
 namespace sbl {
@@ -14,12 +15,10 @@ namespace sbl {
     ~Renderer();
 
     void DrawToScreen();
-    // void DrawSpriteBatch(FrameBuffer& fb, const View& view, const Texture& texture, const Shader& shader, const SpriteBatch& spriteBatch);
-    void DrawSpriteBatch(const SpriteBatch& spriteBatch);
+    // void DrawSpriteBatch(const SpriteBatch& spriteBatch);
     void Test(const Shader& shader);
-
-    template<class T>
-    void DrawBatch(const Batch<T>& batch);
+    static void DrawBatch(FrameBuffer& fb, const Batch& batch);
+    static void DrawSprites(FrameBuffer& fb, const std::vector<Sprite>& sprite, const Texture& texture);
 
   private:
     Window* m_window;

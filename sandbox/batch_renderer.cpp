@@ -42,18 +42,20 @@ int main() {
     -0.1f, -0.1f, 
     0.0f,  0.1f, 
   };
-  std::vector<unsigned int> sizes = {3};
-  sbl::SpriteBatch batch(vertices, shader);
-  batch.vertexSizes = sizes;
+
+  sbl::FrameBuffer fb;
+  sbl::Texture text(1,1);
+
+  std::vector<sbl::Sprite> sprites;
   sbl::Sprite sprite1;
   sbl::Sprite sprite2;
   sprite1.position = sbl::Vec2f(0,0);
   sprite2.position = sbl::Vec2f(0.5f,0.5f);
   sprite1.color = sbl::Color(1,0,0,0);
   sprite2.color = sbl::Color(0,1,0,0);
-  batch.Add(sprite1);
-  batch.Add(sprite2);
-  unsigned int amount = 100000;
+  sprites.push_back(sprite1);
+  sprites.push_back(sprite2);
+  unsigned int amount = 10000;
   int half = amount/2;
   int sqrt = sbl::Math::Sqrt(amount);
   for (int i = 0; i < sqrt; i++) {
@@ -62,7 +64,7 @@ int main() {
       float y = (float)(j*sqrt - half)*20/amount;
       sprite1.position = sbl::Vec2f(x,y);
       sprite1.color = sbl::Color(x,y,x,1);
-      batch.Add(sprite1);
+      sprites.push_back(sprite1);
     }
   }
 
@@ -80,7 +82,7 @@ int main() {
       window.Close();
     }
 
-    renderer.DrawSpriteBatch(batch);
+    renderer.DrawSprites(fb,sprites, text);
 
     sbl::ImGUI::NewFrame();
     {

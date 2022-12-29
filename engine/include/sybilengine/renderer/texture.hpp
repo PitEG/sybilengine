@@ -4,6 +4,7 @@
 
 namespace sbl {
   class Texture {
+  public:
     enum Wrap {
       Repeat,
       MirroredRepeat,
@@ -25,6 +26,10 @@ namespace sbl {
 
   void GenerateMipmaps();
   ~Texture();
+
+  unsigned int GetID() const;
+  unsigned int GetWidth() const;
+  unsigned int GetHeight() const;
 
   private:
     unsigned int m_id;

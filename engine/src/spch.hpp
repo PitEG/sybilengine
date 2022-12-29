@@ -10,6 +10,7 @@
 #include <set>
 #include <string>
 #include <regex>
+#include <functional>
 
 #include <chrono>
 #include <cmath>

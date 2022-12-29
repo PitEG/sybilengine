@@ -11,6 +11,7 @@ namespace sbl {
   using Vec2f = Vec2<float>;
   using Vec2d = Vec2<double>;
   using Vec2i = Vec2<int>;
+  using Vec2ui = Vec2<int>;
   using Vec2l = Vec2<long>;
 
   template<class T> 

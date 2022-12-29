@@ -30,9 +30,10 @@ int main() {
 
   sbl::FrameBuffer fb;
   sbl::Texture text(2,2);
+  sbl::Texture sybilText(sbl::FileSystem::GetExecPath() + "sybil.png");
 
   fb.AttachTexture(text);
-  fb.Clear(1,1,0,1);
+  fb.Clear(1,1,1,1);
 
   std::vector<sbl::Sprite> sprites;
   sbl::Sprite sprite1;
@@ -43,15 +44,15 @@ int main() {
   sprite2.color = sbl::Color(0,1,0,0);
   sprites.push_back(sprite1);
   sprites.push_back(sprite2);
-  unsigned int amount = 10;
+  unsigned int amount = 1;
   int half = amount/2;
   int sqrt = sbl::Math::Sqrt(amount);
   for (int i = 0; i < sqrt; i++) {
     for (int j = 0; j < sqrt; j++) {
-      float x = (float)(i*sqrt- half)*20/amount;
-      float y = (float)(j*sqrt - half)*20/amount;
-      sprite1.position = sbl::Vec2f(x,y);
-      sprite1.color = sbl::Color(x,y,x,1);
+      // float x = (float)(i*sqrt- half)*20/amount;
+      // float y = (float)(j*sqrt - half)*20/amount;
+      // sprite1.position = sbl::Vec2f(x,y);
+      // sprite1.color = sbl::Color(x,y,x,1);
       sprites.push_back(sprite1);
     }
   }
@@ -70,6 +71,7 @@ int main() {
       window.Close();
     }
 
+    renderer.DrawToScreen(window,sbl::Rectui(0,0,0,0),text,sbl::Rectf(0,0,0,0));
     renderer.DrawSprites(fb,sprites, text);
 
     sbl::ImGUI::NewFrame();

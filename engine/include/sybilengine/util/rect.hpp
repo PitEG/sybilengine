@@ -7,6 +7,7 @@ namespace sbl {
 
   using Rectf = Rect<float>;
   using Rectd = Rect<double>;
+  using Rectui = Rect<unsigned int>;
 
   /**
    * very much like the rect struct except it explicitly stores

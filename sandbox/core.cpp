@@ -25,6 +25,9 @@ int main() {
   char file_name[1024] = "placeholder";
   std::string file_contents = "";
 
+  // input stuff
+  SDL_GameControllerOpen(0);
+
   while(!window.IsClosed()) {
     double frame_time = current_frame - last_frame;
     f++;
@@ -82,6 +85,13 @@ int main() {
       }
       ImGui::InputText("file name",file_name,IM_ARRAYSIZE(file_name));
       ImGui::Text("%s", file_contents.c_str());
+      ImGui::End();
+    }
+    {
+      ImGui::Begin("gamepads");
+      ImGui::Text("num controllers: %d", SDL_NumJoysticks());
+      sbl::Input::Gamepad& gamepad = input.Gamepads[0];
+      ImGui::Checkbox("dpad up", &gamepad.up);
       ImGui::End();
     }
     bool a = true;

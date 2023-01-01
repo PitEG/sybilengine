@@ -1,6 +1,7 @@
 #include "sybilengine/core/window.hpp"
 #include "sybilengine/core/keycode.hpp"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 #include <glad/glad.h>
 #include <imgui_impl_sdl.h>
@@ -45,6 +46,37 @@ namespace sbl {
     SDL_GL_DeleteContext((SDL_GLContext*)m_graphicsContext);
   }
 
+  // write to gamepad
+  void GetGamepadState(Input::Gamepad& gamepad) {
+    SDL_GameController* sdlController = SDL_GameControllerOpen(0);
+
+    gamepad.up = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_DPAD_UP);
+    gamepad.down = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+    gamepad.left = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+    gamepad.right = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
+    gamepad.north = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_Y);
+    gamepad.south = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_A);
+    gamepad.west = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_X);
+    gamepad.east = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_B);
+
+    gamepad.leftBumper = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+    gamepad.rightBumper = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+    gamepad.leftTrigger = SDL_GameControllerGetAxis(sdlController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+    gamepad.rightTrigger = SDL_GameControllerGetAxis(sdlController, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+    
+    gamepad.leftStickX = SDL_GameControllerGetAxis(sdlController, SDL_CONTROLLER_AXIS_LEFTX);
+    gamepad.leftStickY = SDL_GameControllerGetAxis(sdlController, SDL_CONTROLLER_AXIS_LEFTY);
+    gamepad.leftStickIn = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+    gamepad.rightStickX = SDL_GameControllerGetAxis(sdlController, SDL_CONTROLLER_AXIS_RIGHTX);
+    gamepad.rightStickY = SDL_GameControllerGetAxis(sdlController, SDL_CONTROLLER_AXIS_RIGHTY);
+    gamepad.rightStickIn = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+
+    gamepad.start = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_START);
+    gamepad.select = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_BACK);
+    gamepad.home = SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_GUIDE);
+  }
+
   /**
    * I am using the SDL poll input function beceause it lets me queue up inputs that
    * happened inbetween poll calls. This way I don't just take a snapshot but actually
@@ -60,6 +92,9 @@ namespace sbl {
     int keyboardArraySize;
     const Uint8* state = SDL_GetKeyboardState(&keyboardArraySize);
     memcpy(&input.KeyState, state, keyboardArraySize * sizeof(bool));
+
+    Input::Gamepad& gamepad = input.Gamepads[0];
+    GetGamepadState(gamepad);
 
     // take current snapshot of mouse
     SDL_GetMouseState(&input.Mouse.x, &input.Mouse.y);
@@ -85,6 +120,25 @@ namespace sbl {
           case SDL_BUTTON_MIDDLE: input.Mouse.m3 = true;
           case SDL_BUTTON_X1: input.Mouse.m4 = true;
           case SDL_BUTTON_X2: input.Mouse.m5 = true;
+        }
+      }
+      if (ev.type == SDL_CONTROLLERBUTTONDOWN) {
+        switch(ev.cbutton.button) {
+          case SDL_CONTROLLER_BUTTON_A: gamepad.south = true;
+          case SDL_CONTROLLER_BUTTON_B: gamepad.east = true;
+          case SDL_CONTROLLER_BUTTON_X: gamepad.west = true;
+          case SDL_CONTROLLER_BUTTON_Y: gamepad.north = true;
+          case SDL_CONTROLLER_BUTTON_BACK: gamepad.select = true;
+          case SDL_CONTROLLER_BUTTON_START: gamepad.start = true;
+          case SDL_CONTROLLER_BUTTON_GUIDE: gamepad.home = true;
+          case SDL_CONTROLLER_BUTTON_LEFTSTICK: gamepad.leftStickIn = true;
+          case SDL_CONTROLLER_BUTTON_RIGHTSTICK: gamepad.rightStickIn = true;
+          case SDL_CONTROLLER_BUTTON_LEFTSHOULDER: gamepad.leftBumper = true;
+          case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER: gamepad.rightBumper = true;
+          case SDL_CONTROLLER_BUTTON_DPAD_UP: gamepad.up = true;
+          case SDL_CONTROLLER_BUTTON_DPAD_DOWN: gamepad.down = true;
+          case SDL_CONTROLLER_BUTTON_DPAD_RIGHT: gamepad.right = true;
+          case SDL_CONTROLLER_BUTTON_DPAD_LEFT: gamepad.left = true;
         }
       }
     }

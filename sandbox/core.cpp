@@ -6,6 +6,27 @@
 
 #include <SDL2/SDL.h>
 
+void GamepadGUI(sbl::Input::Gamepad gamepad) {
+  ImGui::Text("left stick x: %d", gamepad.leftStickX);
+  ImGui::Text("left stick y: %d", gamepad.leftStickY);
+
+  ImGui::Text("right stick x: %d", gamepad.rightStickX);
+  ImGui::Text("right stick y: %d", gamepad.rightStickY);
+
+  ImGui::Checkbox("up", &gamepad.up);
+  ImGui::Checkbox("down", &gamepad.down);
+  ImGui::Checkbox("left", &gamepad.left);
+  ImGui::Checkbox("right", &gamepad.right);
+
+  ImGui::Checkbox("north", &gamepad.north);
+  ImGui::Checkbox("south", &gamepad.south);
+  ImGui::Checkbox("west", &gamepad.west);
+  ImGui::Checkbox("east", &gamepad.east);
+
+  ImGui::Text("left trigger: %d", gamepad.leftTrigger);
+  ImGui::Text("right trigger: %d", gamepad.rightTrigger);
+}
+
 int main() {
   sbl::Engine::Init();
   std::cout << "hello, world!" << std::endl;
@@ -91,7 +112,7 @@ int main() {
       ImGui::Begin("gamepads");
       ImGui::Text("num controllers: %d", SDL_NumJoysticks());
       sbl::Input::Gamepad& gamepad = input.Gamepads[0];
-      ImGui::Checkbox("dpad up", &gamepad.up);
+      GamepadGUI(gamepad);
       ImGui::End();
     }
     bool a = true;

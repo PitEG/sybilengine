@@ -124,6 +124,7 @@ namespace sbl {
       }
       if (ev.type == SDL_CONTROLLERBUTTONDOWN) {
         switch(ev.cbutton.button) {
+          /*
           case SDL_CONTROLLER_BUTTON_A: gamepad.south = true;
           case SDL_CONTROLLER_BUTTON_B: gamepad.east = true;
           case SDL_CONTROLLER_BUTTON_X: gamepad.west = true;
@@ -139,6 +140,7 @@ namespace sbl {
           case SDL_CONTROLLER_BUTTON_DPAD_DOWN: gamepad.down = true;
           case SDL_CONTROLLER_BUTTON_DPAD_RIGHT: gamepad.right = true;
           case SDL_CONTROLLER_BUTTON_DPAD_LEFT: gamepad.left = true;
+          */
         }
       }
     }

@@ -20,11 +20,11 @@ namespace sbl {
       bool home = false;
 
       // sticks
-      float leftStickX = 0;
-      float leftStickY = 0;
+      int leftStickX = 0;
+      int leftStickY = 0;
       bool leftStickIn = 0;
-      float rightStickX = 0;
-      float rightStickY = 0;
+      int rightStickX = 0;
+      int rightStickY = 0;
       bool rightStickIn = 0;
 
       // dpad
@@ -36,8 +36,8 @@ namespace sbl {
       // shoulder buttons
       bool leftBumper = false;
       bool rightBumper = false;
-      float leftTrigger = 0;
-      float rightTrigger = 0;
+      int leftTrigger = 0;
+      int rightTrigger = 0;
 
       // face buttons
       bool north = false;

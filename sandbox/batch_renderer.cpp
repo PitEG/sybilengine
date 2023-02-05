@@ -20,8 +20,8 @@ void GLAPIENTRY MessageCallback( GLenum source,
 int main() {
   sbl::Engine::Init();
   sbl::Window window = sbl::Window("test");
-  // window.SetVsync(sbl::Window::VSYNC_OFF);
-  window.SetVsync(sbl::Window::VSYNC_ON);
+  window.SetVsync(sbl::Window::VSYNC_OFF);
+  // window.SetVsync(sbl::Window::VSYNC_ON);
   sbl::ImGUI::CreateContext(window);
 
   glEnable(GL_DEBUG_OUTPUT);
@@ -48,7 +48,7 @@ int main() {
   sprite2.size = sbl::Vec2f(16,16);
   sprites.push_back(sprite1);
   sprites.push_back(sprite2);
-  unsigned int amount = 100;
+  unsigned int amount = 100'000;
   int half = amount/2;
   int sqrt = sbl::Math::Sqrt(amount);
   for (int i = 0; i < sqrt; i++) {
@@ -83,7 +83,11 @@ int main() {
     if (input.GetKey(sbl::KeyCode::DOWN)) { displacement += sbl::Vec2f(0,-1); }
     if (input.GetKey(sbl::KeyCode::LEFT)) { displacement += sbl::Vec2f(-1,0); }
     if (input.GetKey(sbl::KeyCode::RIGHT)) { displacement += sbl::Vec2f(1,0); }
-    view.Translate(displacement * frame_time * 40);
+    view.Translate(displacement * frame_time * 80);
+
+    for (int i = 0; i < sprites.size(); i++) {
+      sprites[i].rotation += 1 * frame_time;
+    }
 
     fb.Clear(1,1,1,1);
     renderer.DrawSprites(fb,view,sprites,sybilText);

@@ -11,6 +11,7 @@ namespace sbl {
     Color color;
     Vec2f origin;
     Vec2f size;
+    float rotation; // in radians
     Rectui textCoord;
     unsigned int texture;
   };

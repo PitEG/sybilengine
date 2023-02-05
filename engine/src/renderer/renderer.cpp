@@ -121,6 +121,11 @@ namespace sbl {
     glVertexAttribPointer(4,2,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)offset);
     glVertexAttribDivisor(4,1);
     offset += sizeof(Vec2f);
+    // scale 
+    glEnableVertexAttribArray(5);
+    glVertexAttribPointer(5,2,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)offset);
+    glVertexAttribDivisor(5,1);
+    offset += sizeof(float);
 
     // bind framebuffer
     // glBindFramebuffer(GL_FRAMEBUFFER, 0); // currently binding default framebuffer

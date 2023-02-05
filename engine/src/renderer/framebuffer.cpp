@@ -7,10 +7,12 @@ namespace sbl {
     glGenFramebuffers(1, &m_id);
   }
 
+  /*
   FrameBuffer::FrameBuffer(const unsigned int width, const unsigned int height)
   : m_width(width), m_height(height) {
     glGenFramebuffers(1, &m_id);
   }
+  */
 
   FrameBuffer::~FrameBuffer() {
     if (m_id != 0) {
@@ -29,6 +31,10 @@ namespace sbl {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture.GetID());
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.GetID(), 0);
+
+    // set width/height
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, (int*)&m_width);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, (int*)&m_height);
   }
   
   unsigned int FrameBuffer::ID() const {

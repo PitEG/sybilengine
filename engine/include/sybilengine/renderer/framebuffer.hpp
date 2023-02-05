@@ -5,7 +5,7 @@ namespace sbl {
   class FrameBuffer {
   public:
     FrameBuffer();
-    FrameBuffer(const unsigned int width, const unsigned int height);
+    // FrameBuffer(const unsigned int width, const unsigned int height);
     ~FrameBuffer();
 
     void Clear(float r, float g, float b, float a);

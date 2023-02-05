@@ -2,6 +2,7 @@
 
 #include "sybilengine/util/vec.hpp"
 #include "sybilengine/util/color.hpp"
+#include "sybilengine/util/rect.hpp"
 
 namespace sbl {
   class Sprite {
@@ -10,8 +11,7 @@ namespace sbl {
     Color color;
     Vec2f origin;
     Vec2f size;
-    Vec2f texCoordBL;
-    Vec2f texCoordTR;
+    Rectui textCoord;
     unsigned int texture;
   };
 }

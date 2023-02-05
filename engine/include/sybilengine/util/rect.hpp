@@ -40,8 +40,13 @@ namespace sbl {
   }
 
   template<class T>
-  Rect<T>::Rect(T t, T b, T l, T r) 
+  Rect<T>::Rect(T b, T l, T t, T r) 
   : t(t), b(b), l(l), r(r) {
+  }
+
+  template<class T>
+  Rect<T>::Rect(const Vec2<T>& bl, const Vec2<T>& tr)
+  : t(tr.y), b(bl.y), l(bl.x), r(tr.x) {
   }
 
   template<class T>

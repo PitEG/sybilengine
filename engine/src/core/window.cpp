@@ -180,4 +180,18 @@ namespace sbl {
     glClearColor(r,g,b,a);
     glClear(GL_COLOR_BUFFER_BIT);
   }
+
+  unsigned int Window::Width() const {
+    int w;
+    int h;
+    SDL_GetWindowSize((SDL_Window*)m_window,&w,&h);
+    return w;
+  }
+
+  unsigned int Window::Height() const {
+    int w;
+    int h;
+    SDL_GetWindowSize((SDL_Window*)m_window,&w,&h);
+    return h;
+  }
 }

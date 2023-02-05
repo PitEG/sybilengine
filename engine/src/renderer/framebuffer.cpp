@@ -7,6 +7,11 @@ namespace sbl {
     glGenFramebuffers(1, &m_id);
   }
 
+  FrameBuffer::FrameBuffer(const unsigned int width, const unsigned int height)
+  : m_width(width), m_height(height) {
+    glGenFramebuffers(1, &m_id);
+  }
+
   FrameBuffer::~FrameBuffer() {
     if (m_id != 0) {
       glDeleteFramebuffers(1, &m_id);
@@ -24,5 +29,17 @@ namespace sbl {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture.GetID());
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.GetID(), 0);
+  }
+  
+  unsigned int FrameBuffer::ID() const {
+    return m_id;
+  }
+
+  unsigned int FrameBuffer::Width() const {
+    return m_width;
+  }
+
+  unsigned int FrameBuffer::Height() const {
+    return m_height;
   }
 }

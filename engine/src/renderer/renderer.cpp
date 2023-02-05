@@ -2,6 +2,7 @@
 #include "sybilengine/core/keycode.hpp"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace sbl {
   Renderer::Renderer(Window* window) {
@@ -33,6 +34,12 @@ namespace sbl {
        1.0f, -1.0f, -1.0f, -1.0f, 1.0f,  1.0f,  // triangle 1 
       -1.0f, -1.0f, 1.0f,  1.0f, -1.0f,  1.0f,  // triangle 2
     };
+
+    // default blend mode
+    glDisable(GL_BLEND);
+    // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
+    // glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+
     // bind VAO and VBO
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -47,6 +54,8 @@ namespace sbl {
     // bind shader
     glUseProgram(screenSetup.shader.GetID());
     glUniform1i(glGetUniformLocation(screenSetup.shader.GetID(),"texture0"),0);
+    // set viewport
+    glViewport(winRect.BL().x, winRect.BL().y, winRect.TR().x, winRect.TR().y);
     glDrawArrays(GL_TRIANGLES, 0, 6);
   }
 
@@ -66,7 +75,7 @@ namespace sbl {
   };
 
   // makes a vertex array and two buffers on the fly, sort of expensive.
-  void Renderer::DrawSprites(FrameBuffer& fb, const std::vector<Sprite>& sprites, const Texture& texture) {
+  void Renderer::DrawSprites(FrameBuffer& fb, const View& view, const std::vector<Sprite>& sprites, const Texture& texture) {
     static float vertices[] = {
        0.5f, -0.5f, -0.5f, -0.5f, 0.5f,  0.5f,  // triangle 1 
       -0.5f, -0.5f, 0.5f,  0.5f, -0.5f,  0.5f,  // triangle 2
@@ -91,23 +100,42 @@ namespace sbl {
     unsigned int instance_buffer = spriteSetup.IBO;
     glBindBuffer(GL_ARRAY_BUFFER, instance_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Sprite) * sprites.size(), instances.data(), GL_STATIC_DRAW);
+    long offset = 0;
     // position
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)0);
+    glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)offset);
     glVertexAttribDivisor(1,1);
+    offset += sizeof(Vec2f);
     // color
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2,4,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)(sizeof(Vec2f)));
+    glVertexAttribPointer(2,4,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)offset);
     glVertexAttribDivisor(2,1);
+    offset += sizeof(Color);
+    // origin 
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3,2,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)offset);
+    glVertexAttribDivisor(3,1);
+    offset += sizeof(Vec2f);
+    // scale 
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4,2,GL_FLOAT,GL_FALSE,sizeof(Sprite),(void*)offset);
+    glVertexAttribDivisor(4,1);
+    offset += sizeof(Vec2f);
 
     // bind framebuffer
-    glBindFramebuffer(GL_FRAMEBUFFER, 0); // currently binding default framebuffer
+    // glBindFramebuffer(GL_FRAMEBUFFER, 0); // currently binding default framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, fb.ID()); 
+    glViewport(0,0,fb.Width(), fb.Height());
     // bind texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture.GetID());
     // bind shader
     glUseProgram(spriteSetup.shader.GetID());
+    // set uniforms
+    glm::mat4x4 projection = view.GetProjection();
+    glUniformMatrix4fv(glGetUniformLocation(spriteSetup.shader.GetID(),"projection"),1,GL_FALSE,glm::value_ptr(projection));
     glUniform1i(glGetUniformLocation(spriteSetup.shader.GetID(),"texture0"),0);
+    // draw
     glBindVertexArray(VAO);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, sprites.size());
   }

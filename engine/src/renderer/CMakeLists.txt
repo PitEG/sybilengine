@@ -3,6 +3,7 @@ set(RENDERER_SRC
   shader.cpp
   texture.cpp
   framebuffer.cpp
+  view.cpp
   )
 
 set(SRC ${RENDERER_SRC})

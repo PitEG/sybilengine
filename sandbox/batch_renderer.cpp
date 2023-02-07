@@ -42,6 +42,8 @@ int main() {
   sbl::Sprite sprite2;
   sprite1.position = sbl::Vec2f(0,0);
   sprite2.position = sbl::Vec2f(-1.0,-1.0f);
+  sprite1.rotation = 0;
+  sprite2.rotation = 0;
   sprite1.color = sbl::Color(1,0,0,0);
   sprite2.color = sbl::Color(0,1,0,0);
   sprite1.size = sbl::Vec2f(16,16);
@@ -86,7 +88,7 @@ int main() {
     view.Translate(displacement * frame_time * 80);
 
     for (int i = 0; i < sprites.size(); i++) {
-      sprites[i].rotation += 1 * frame_time;
+      sprites[i].rotation += 1 * (float)frame_time;
     }
 
     fb.Clear(1,1,1,1);
@@ -98,6 +100,7 @@ int main() {
       ImGui::Begin("debug");
       ImGui::Text("frame time: %lf", frame_time);
       ImGui::Text("frame rate: %lf", 1 / frame_time);
+      ImGui::Text("num sprites: %ld", sprites.size());
       ImGui::End();
     }
     // bool imgui_demo = true;

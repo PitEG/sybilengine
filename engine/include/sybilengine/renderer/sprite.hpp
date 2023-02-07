@@ -7,12 +7,12 @@
 namespace sbl {
   class Sprite {
   public:
-    Vec2f position;
-    Color color;
-    Vec2f origin;
-    Vec2f size;
-    float rotation; // in radians
-    Rectui textCoord;
-    unsigned int texture;
+    Vec2f position = Vec2f::Zero();
+    Color color = Color::White();
+    Vec2f origin = Vec2f::Zero();
+    Vec2f size = Vec2f::Zero();
+    float rotation = 0; // in radians
+    Rectui textCoord = Rectui(0,0,0,0);
+    unsigned int texture = 0;
   };
 }

@@ -14,6 +14,9 @@ namespace sbl {
     bool Contains(const Entity& e) const;
     T& Get(const Entity& e); // gets reference, lets you modify the data
 
+    T& operator [](const Entity& e);
+    const T& operator [](const Entity& e) const;
+
   private:
     // map of entity id to this object's internal list of entities
     // this will be very sparse :/
@@ -32,7 +35,15 @@ namespace sbl {
     if (m_entityIds.size() < idx) {
       m_entityIds.resize(idx);
     }
+
+    // add to array
     m_entities.push_back(idx);
+    m_data.push_back(data);
+
+    // add to map
+    if (m_entityIds.size() <= idx) {
+      m_entityIds.resize(idx+1);
+    }
     m_entityIds[idx] = m_entities.size()-1;
   }
 
@@ -51,5 +62,35 @@ namespace sbl {
     // resize to delete the last element (which is the element at idx)
     m_entities.resize(m_entities.size()-1);
     m_data.resize(m_data.size()-1);
+  }
+
+  template<class T>
+  T& Component<T>::Get(const Entity& e) {
+    unsigned int idx = m_entityIds[e.ID()];
+    return m_data[idx];
+  }
+
+  template<class T>
+  bool Component<T>::Contains(const Entity& e) const {
+    if (m_entityIds.size() < e.ID()) {
+      return false;
+    }
+    if (m_entityIds[e.ID()] == -1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  template<class T>
+  T& Component<T>::operator[](const Entity& e) {
+    unsigned int idx = m_entityIds[e.ID()];
+    return m_data[idx];
+  }
+
+  template<class T>
+  const T& Component<T>::operator[](const Entity& e) const {
+    unsigned int idx = m_entityIds[e.ID()];
+    return m_data[idx];
   }
 }

@@ -134,12 +134,12 @@ namespace sbl {
   }
 
   template<class T>
-  T& FreeList<T>::operator[](int id) {
+  T& FreeList<T>::operator[](const int id) {
     return m_data[id];
   }
 
   template<class T>
-  const T& FreeList<T>::operator[](int id) const {
+  const T& FreeList<T>::operator[](const int id) const {
     return m_data[id];
   }
 

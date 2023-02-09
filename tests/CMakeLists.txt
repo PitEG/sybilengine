@@ -3,6 +3,7 @@ message("found Catch2")
 
 set(SBL_ECS_TEST
   engine/ecs/test_scene.cpp
+  engine/ecs/test_component.cpp
   )
 
 set(SBL_TEST

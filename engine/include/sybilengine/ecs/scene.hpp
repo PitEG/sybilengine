@@ -18,12 +18,12 @@ namespace sbl {
     class ComponentEntry {
     public:
       virtual void* GetComponent() { return nullptr; }
-      virtual unsigned int GetID() { return 0; }
+      // virtual unsigned int GetID() { return 0; }
     };
     template<class T>
     class ComponentGet : ComponentEntry {
     public:
-      unsigned int id = 0;
+      // unsigned int id = 0;
       Component<T> m_component;
       virtual void* GetComponent() {
         return (void*)&m_component;

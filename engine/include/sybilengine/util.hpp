@@ -3,6 +3,7 @@
 #include "sybilengine/util/circle.hpp"
 #include "sybilengine/util/color.hpp"
 #include "sybilengine/util/freelist.hpp"
+#include "sybilengine/util/pagetable.hpp"
 #include "sybilengine/util/math.hpp"
 #include "sybilengine/util/random.hpp"
 #include "sybilengine/util/time.hpp"

@@ -13,16 +13,10 @@ namespace sbl {
     template<class T>
     Component<T>& Get();
 
-    template<class... Types>
-    std::tuple<Component<Types>...> Filter();
-
-    template<class T1, class T2, class... Types>
-    std::vector<ComponentEntry*> View();
-
     template<class T>
-    std::vector<ComponentEntry*> View();
-
-    // std::vector<ComponentEntry*> View() { return std::vector<ComponentEntry*>(); }
+    std::tuple<Component<T>*> Filter();
+    template<class T1, class T2, class... Types>
+    std::tuple<Component<T1>*, Component<T2>*, Component<Types>*...> Filter();
 
   private:
     static unsigned int MAX_COMPONENT_TYPES;
@@ -80,25 +74,15 @@ namespace sbl {
     return *components;
   }
 
-  template<class... Types>
-  std::tuple<Component<Types>...> Scene::Filter() {
-    return std::tuple<Component<int>,Component<char>>();
-  }
-
-  template<class T1, class T2, class... Types>
-  std::vector<Scene::ComponentEntry*> Scene::View() {
-    auto list = View<T2, Types...>();
-    auto listHead = std::vector<Scene::ComponentEntry*>({GetPointer<T1>()});
-    listHead.insert(listHead.end(),list.begin(),list.end());
-    return listHead;
-    // return std::vector<ComponentEntry*>();
-  }
-
+  // recursive stuff, my brain is tired
   template<class T>
-  std::vector<Scene::ComponentEntry*> Scene::View() {
-    ComponentEntry* entry = (ComponentEntry*)m_components[0];
-    std::vector<ComponentEntry*> result;
-    result.push_back(entry);
-    return result;
+  std::tuple<Component<T>*> Scene::Filter() {
+    return std::tuple<Component<T>*>(&Get<T>());
+  }
+  template<class T1, class T2, class... Types>
+  std::tuple<Component<T1>*, Component<T2>*, Component<Types>*...> Scene::Filter() {
+    auto list = Filter<T2, Types...>();
+    auto listHead = std::tuple<Component<T1>*>(&Get<T1>());
+    return std::tuple_cat(listHead, list);
   }
 }

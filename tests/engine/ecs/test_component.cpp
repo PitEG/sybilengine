@@ -21,4 +21,7 @@ TEST_CASE("Component","[Component]") {
     CHECK(ints.Contains(e1) == false);
     CHECK(ints.Contains(e2) == false);
   }
+
+  SECTION("view") {
+  }
 }

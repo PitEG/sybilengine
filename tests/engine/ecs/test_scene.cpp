@@ -1,6 +1,8 @@
 #include <sybilengine/ecs/scene.hpp>
 #include <catch2/catch.hpp>
 
+#include <type_traits>
+
 TEST_CASE("Scene","[Scene]") {
   SECTION("default constructor") {
     sbl::Scene s;
@@ -22,5 +24,18 @@ TEST_CASE("Scene","[Scene]") {
 
     sbl::Component<char>& chars_again = s.Get<char>();
     CHECK(chars_again.Get(e) == 'a');
+  }
+
+  SECTION("view") {
+    sbl::Scene s;
+    sbl::Component<int>& ints = s.Get<int>();
+    sbl::Component<char>& chars = s.Get<char>();
+    sbl::Entity e(0);
+    ints.Add(e, 2);
+    chars.Add(e, 'b');
+
+    auto view = s.View<int,char>();
+    auto filter = s.Filter<int,char>();
+    // CHECK(view[0]->GetComponent() == 2);
   }
 }

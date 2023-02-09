@@ -12,6 +12,7 @@ project(sybil)
 
 add_subdirectory(engine)
 add_subdirectory(sandbox)
+add_subdirectory(tests)
 # add_subdirectory(editor)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

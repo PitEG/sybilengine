@@ -25,7 +25,7 @@ namespace sbl {
     public:
       unsigned int id = 0;
       Component<T> m_component;
-      virtual void* GetCopmonent() {
+      virtual void* GetComponent() {
         return (void*)&m_component;
       }
     };
@@ -35,7 +35,6 @@ namespace sbl {
   template<class T>
   Component<T>& Scene::Get() {
     static unsigned int typeId = -1;
-    unsigned int idx = typeId;
     
     // register if we're using a new component
     if (typeId == -1) {
@@ -46,11 +45,13 @@ namespace sbl {
       m_components.resize(m_components.size() + typeId + 1, nullptr);
     }
     // if registry doesn't have entry, make one
-    if (m_components[idx] == nullptr) {
-      m_components[idx] = new ComponentGet<T>();
+    if (m_components[typeId] == nullptr) {
+      m_components[typeId] = new ComponentGet<T>();
     }
 
-    return *(ComponentGet<T>*)(m_components[idx]);
+    ComponentGet<T>* entry = (ComponentGet<T>*)(m_components[typeId]);
+    Component<T>* components = (Component<T>*)entry->GetComponent();
+    return *components;
   }
 }
 

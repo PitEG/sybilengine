@@ -37,6 +37,8 @@ TEST_CASE("Scene","[Scene]") {
     auto filter = s.Filter<int,char>();
     CHECK(std::get<0>(filter)->Get(e) == 2);
     CHECK(std::get<1>(filter)->Get(e) == 'b');
+    CHECK(s.IntersectEntity(filter, e) == true);
+
     // CHECK(view[0]->GetComponent() == 2);
   }
 }

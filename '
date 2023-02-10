@@ -15,12 +15,8 @@ namespace sbl {
 
     template<class T>
     std::tuple<Component<T>*> Filter();
-
     template<class T1, class T2, class... Types>
     std::tuple<Component<T1>*, Component<T2>*, Component<Types>*...> Filter();
-
-    template<std::size_t I = 0, class... Ts>
-    constexpr bool IntersectEntity(std::tuple<Component<Ts>*...> tup, const Entity& e);
 
   private:
     static unsigned int MAX_COMPONENT_TYPES;
@@ -90,15 +86,8 @@ namespace sbl {
     return std::tuple_cat(listHead, list);
   }
 
-  // iterates through a tuple of Component<T>*
-  template<std::size_t I, class... Ts>
-  constexpr bool Scene::IntersectEntity(std::tuple<Component<Ts>*...> tup, const Entity& e) {
-    if constexpr(I == sizeof...(Ts)) {
-      return true;
-    }
-    else {
-      bool result = std::get<I>(tup)->Contains(e); 
-      return result && IntersectEntity<I+1>(tup,e);
-    }
+  template<std::size_t I = 0, class... Ts>
+  constexpr bool intersectEntity(std::tuple<Component<Ts...>> tup) {
+    return true;
   }
 }

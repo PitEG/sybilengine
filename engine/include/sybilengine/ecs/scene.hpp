@@ -14,6 +14,9 @@ namespace sbl {
     Component<T>& Get();
 
     template<class T>
+    void Insert(Component<T>& component);
+
+    template<class T>
     std::tuple<Component<T>*> Filter();
 
     template<class T1, class T2, class... Types>
@@ -21,6 +24,9 @@ namespace sbl {
 
     template<std::size_t I = 0, class... Ts>
     constexpr bool IntersectEntity(std::tuple<Component<Ts>*...> tup, const Entity& e);
+
+    template<class... Ts>
+    constexpr bool IntersectEntity(const Entity& e);
 
   private:
     static unsigned int MAX_COMPONENT_TYPES;
@@ -35,16 +41,15 @@ namespace sbl {
     class ComponentEntry {
     public:
       virtual void* GetComponent() { return nullptr; }
-      // virtual unsigned int GetID() { return 0; }
+      virtual unsigned int GetID() { return 0; }
     };
     template<class T>
     class ComponentGet : ComponentEntry {
     public:
-      // unsigned int id = 0;
+      unsigned int id = 0;
       Component<T> m_component;
-      virtual void* GetComponent() {
-        return (void*)&m_component;
-      }
+      virtual void* GetComponent() { return (void*)&m_component; }
+      virtual unsigned int GetID() { return id; }
     };
   };
   template<class T>
@@ -61,7 +66,9 @@ namespace sbl {
     }
     // if registry doesn't have entry, make one
     if (m_components[typeId] == nullptr) {
-      m_components[typeId] = new ComponentGet<T>();
+      ComponentGet<T>* cg = new ComponentGet<T>();
+      cg->id = typeId;
+      m_components[typeId] = cg;
     }
 
     // ComponentGet<T>* entry = (ComponentGet<T>*)(m_components[typeId]);
@@ -76,6 +83,12 @@ namespace sbl {
     ComponentGet<T>* entry = (ComponentGet<T>*)(GetPointer<T>());
     Component<T>* components = (Component<T>*)entry->GetComponent();
     return *components;
+  }
+
+  template<class T>
+  void Scene::Insert(Component<T>& component) {
+    ComponentGet<T>* entry = (ComponentGet<T>*)(GetPointer<T>());
+    entry->m_component = component;
   }
 
   // recursive stuff, my brain is tired
@@ -100,5 +113,10 @@ namespace sbl {
       bool result = std::get<I>(tup)->Contains(e); 
       return result && IntersectEntity<I+1>(tup,e);
     }
+  }
+
+  template<class... Ts>
+  constexpr bool Scene::IntersectEntity(const Entity& e) {
+    return true;
   }
 }

@@ -41,4 +41,14 @@ TEST_CASE("Scene","[Scene]") {
 
     // CHECK(view[0]->GetComponent() == 2);
   }
+
+  SECTION("insert") {
+    sbl::Scene s;
+    sbl::Component<int> ints;
+    sbl::Entity e(0);
+    ints.Add(e, 2);
+    s.Insert(ints);
+    sbl::Component<int> ints_get = s.Get<int>();
+    CHECK(ints_get.Get(e) == 2);
+  }
 }

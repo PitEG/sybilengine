@@ -78,6 +78,16 @@ namespace sbl {
   template<class T>
   FreeList<T>::FreeList() : m_freeSlot(-1) {}
 
+  // untested
+  template<class T>
+  FreeList<T>::FreeList(const unsigned int reserveSize) : m_freeSlot(-1) {
+    m_data.resize(reserveSize);
+    m_nextFree.resize(reserveSize, TAKEN);
+    for (int i = 0; i < reserveSize - 1; i++) {
+      m_nextFree[i] = i+1;
+    }
+  }
+
   template<class T>
   int FreeList<T>::Add(const T& thing) {
     // there is a free slot to use

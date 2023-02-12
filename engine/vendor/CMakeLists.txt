@@ -16,6 +16,12 @@ message("found SDL2")
 include_directories(${SDL2_INCLUDE_DIRS})
 message("added SDL2")
 
+# SDL Mixer
+find_package(SDL2_mixer REQUIRED)
+message("found sdl2 mixer")
+include_directories(${SDL2_MIXER_INCLUDE_DIRS})
+message("added sdl2 mixer")
+
 # STB IMAGE
 set(STB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/stbimage)
 set(STB_INC ${STB_DIR})

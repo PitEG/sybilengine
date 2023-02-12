@@ -9,6 +9,10 @@ namespace sbl {
   template<class T> 
   class Component {
   public:
+    Component();
+    // copy constructor
+    Component(const Component& component);
+
     void Add(const Entity& e, const T& data);
     void Delete(const Entity& e);
     bool Contains(const Entity& e) const;
@@ -28,6 +32,15 @@ namespace sbl {
     std::vector<unsigned int> m_entities;
     std::vector<T> m_data;
   };
+
+  template<class T>
+  Component<T>::Component() {
+  }
+
+  template<class T>
+  Component<T>::Component(const Component& component) {
+    *this = component;
+  }
 
   template<class T>
   void Component<T>::Add(const Entity& e, const T& data) {

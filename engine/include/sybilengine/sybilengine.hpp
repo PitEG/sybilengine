@@ -4,6 +4,7 @@
 #include "sybilengine/util.hpp"
 #include "sybilengine/renderer.hpp"
 #include "sybilengine/ecs.hpp"
+#include "sybilengine/audio.hpp"
 
 namespace sbl {
   class Engine {

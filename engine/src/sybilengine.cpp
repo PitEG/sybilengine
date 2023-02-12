@@ -7,11 +7,12 @@
 
 namespace sbl {
   void Engine::Init() {
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_TIMER | SDL_INIT_SENSOR | SDL_INIT_GAMECONTROLLER);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS | SDL_INIT_TIMER | SDL_INIT_SENSOR | SDL_INIT_GAMECONTROLLER);
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
     Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
+    Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,4096);
   }
 
   void Engine::Terminate() {

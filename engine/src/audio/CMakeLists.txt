@@ -1,5 +1,6 @@
 set(AUDIO_SRC
   mixer.cpp
+  sound.cpp
   )
 
 set(SRC ${AUDIO_SRC})

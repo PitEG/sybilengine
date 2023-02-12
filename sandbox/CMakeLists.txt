@@ -4,6 +4,10 @@ project(sybilsandbox)
 add_executable(core core.cpp)
 target_link_libraries(core PRIVATE sybilengine)
 
+# audio 
+add_executable(audio audio.cpp)
+target_link_libraries(audio PRIVATE sybilengine)
+
 # renderer testing
 add_executable(renderer renderer.cpp)
 target_link_libraries(renderer PRIVATE sybilengine SDL2)

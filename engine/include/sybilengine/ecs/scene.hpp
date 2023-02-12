@@ -36,29 +36,21 @@ namespace sbl {
   private:
     static unsigned int MAX_COMPONENT_TYPES;
     std::vector<Entity> m_entities;
-    std::vector<void*> m_components; // ComponentEntry
+    std::vector<ComponentEntry> m_components; // ComponentEntry
 
     template<class T>
-    ComponentEntry* GetPointer();
+    ComponentEntry& GetEntry();
 
   // BACKEND STUFF, SORTA UGLY
   private:
     class ComponentEntry {
     public:
-      unsigned int id = 0;
-      void* components;
-      virtual void* GetComponent() { return nullptr; }
-      virtual unsigned int GetID() { return 0; }
-    };
-    template<class T>
-    class ComponentGet : ComponentEntry {
-    public:
-      virtual void* GetComponent() { return (void*)components; }
-      virtual unsigned int GetID() { return id; }
+      unsigned int id = -1;
+      void* components = nullptr;
     };
   };
   template<class T>
-  Scene::ComponentEntry* Scene::GetPointer() {
+  Scene::ComponentEntry& Scene::GetEntry() {
     static unsigned int typeId = -1;
     
     // register if we're using a new component
@@ -67,34 +59,29 @@ namespace sbl {
     }
     // resize registry if needed
     if (typeId >= m_components.size()) {
-      m_components.resize(m_components.size() + typeId + 1, nullptr);
+      m_components.resize(m_components.size() + typeId + 1);
     }
-    // if registry doesn't have entry, make one
-    if (m_components[typeId] == nullptr) {
-      ComponentGet<T>* cg = new ComponentGet<T>();
-      cg->id = typeId;
-      m_components[typeId] = cg;
+    // assign id to entry
+    if (m_components[typeId].id == -1) {
+      m_components[typeId].id = typeId;
     }
 
-    // ComponentGet<T>* entry = (ComponentGet<T>*)(m_components[typeId]);
-    // Component<T>* components = (Component<T>*)entry->GetComponent();
-    // return *components;
-    return (ComponentEntry*)(m_components[typeId]);
+    return m_components[typeId];
   }
   // END OF BACKEND STUFF
 
   template<class T>
   Component<T>& Scene::Get() {
-    ComponentGet<T>* entry = (ComponentGet<T>*)(GetPointer<T>());
-    Component<T>* components = (Component<T>*)entry->GetComponent();
+    ComponentEntry& entry = GetEntry<T>();
+    Component<T>* components = (Component<T>*)entry.components; 
     assert(components != nullptr);
     return *components;
   }
 
   template<class T>
   void Scene::Insert(Component<T>& component) {
-    ComponentGet<T>* entry = (ComponentGet<T>*)(GetPointer<T>());
-    entry->m_component = &component;
+    ComponentEntry& e = GetEntry<T>();
+    e.components = &component;
   }
 
   // recursive stuff, my brain is tired

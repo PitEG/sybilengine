@@ -12,6 +12,10 @@ TEST_CASE("Scene","[Scene]") {
 
   SECTION("add components") {
     sbl::Scene s;
+    sbl::Component<int> i;
+    sbl::Component<char> c;
+    s.Insert(i);
+    s.Insert(c);
     sbl::Component<int>& ints = s.Get<int>();
     sbl::Entity e(0);
     ints.Add(e, 2);
@@ -28,6 +32,10 @@ TEST_CASE("Scene","[Scene]") {
 
   SECTION("view") {
     sbl::Scene s;
+    sbl::Component<int> i;
+    sbl::Component<char> c;
+    s.Insert(i);
+    s.Insert(c);
     sbl::Component<int>& ints = s.Get<int>();
     sbl::Component<char>& chars = s.Get<char>();
     sbl::Entity e(0);

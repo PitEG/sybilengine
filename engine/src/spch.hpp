@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdint>
+#include <cassert>
 
 #include <vector>
 #include <stack>

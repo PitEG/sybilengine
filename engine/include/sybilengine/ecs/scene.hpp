@@ -4,6 +4,7 @@
 #include "sybilengine/ecs/filter.hpp"
 
 #include <tuple>
+#include <cassert>
 
 namespace sbl {
   class Scene {
@@ -21,6 +22,10 @@ namespace sbl {
 
     template<class T1, class T2, class... Types>
     std::tuple<Component<T1>*, Component<T2>*, Component<Types>*...> Filter();
+
+    // scenes just act as slices scenes?
+    template<class... Types>
+    Scene Slice();
 
     template<std::size_t I = 0, class... Ts>
     constexpr bool IntersectEntity(std::tuple<Component<Ts>*...> tup, const Entity& e);
@@ -40,15 +45,15 @@ namespace sbl {
   private:
     class ComponentEntry {
     public:
+      unsigned int id = 0;
+      void* components;
       virtual void* GetComponent() { return nullptr; }
       virtual unsigned int GetID() { return 0; }
     };
     template<class T>
     class ComponentGet : ComponentEntry {
     public:
-      unsigned int id = 0;
-      Component<T> m_component;
-      virtual void* GetComponent() { return (void*)&m_component; }
+      virtual void* GetComponent() { return (void*)components; }
       virtual unsigned int GetID() { return id; }
     };
   };
@@ -82,13 +87,14 @@ namespace sbl {
   Component<T>& Scene::Get() {
     ComponentGet<T>* entry = (ComponentGet<T>*)(GetPointer<T>());
     Component<T>* components = (Component<T>*)entry->GetComponent();
+    assert(components != nullptr);
     return *components;
   }
 
   template<class T>
   void Scene::Insert(Component<T>& component) {
     ComponentGet<T>* entry = (ComponentGet<T>*)(GetPointer<T>());
-    entry->m_component = component;
+    entry->m_component = &component;
   }
 
   // recursive stuff, my brain is tired
